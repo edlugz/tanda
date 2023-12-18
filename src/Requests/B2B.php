@@ -140,17 +140,18 @@ class B2B extends TandaClient
     }
 	
     /**
-     * Send money from merchant wallet to mobile wallet(s)
+     * Send money from merchant wallet to paybill business numbers
      
       	@param string merchantWallet
       	@param string amount
       	@param string paybill
       	@param string accountNumber
       	@param string contact
+      	@param array customFieldsKeyValue
 		
-		@return string
+		@return TandaTransaction
      */
-    protected function mobile(
+    protected function paybill(
 		string $merchantWallet, 
 		string $amount, 
 		string $paybill, 

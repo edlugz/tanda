@@ -11,6 +11,7 @@ use EdLugz\Tanda\Requests\B2B;
 use EdLugz\Tanda\Requests\Airtime;
 use EdLugz\Tanda\Requests\Utility;
 use EdLugz\Tanda\Requests\Transaction;
+use EdLugz\Tanda\Helpers\TandaHelper;
 
 class Tanda
 {
@@ -102,6 +103,16 @@ class Tanda
     public function transaction() : Transaction
     {
         return new Transaction();
+    }
+	
+    /**
+     * 	Helper functions
+     *
+     * @return Helper
+     */
+    public function helper() : TandaHelper
+    {
+        return new TandaHelper();
     }
 	
 }

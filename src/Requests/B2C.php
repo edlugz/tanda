@@ -53,6 +53,7 @@ class B2C extends TandaClient
       	@param string accountNumber
       	@param string accountName
       	@param string narration
+      	@param array customFieldsKeyValue
 		
 		@return TandaTransaction
      */
@@ -158,8 +159,9 @@ class B2C extends TandaClient
       	@param string amount
       	@param string mobileNumber
       	@param string narration
+      	@param array customFieldsKeyValue
 		
-		@return string
+		@return TandaTransaction
      */
     public function mobile(
 		string $merchantWallet, 
@@ -235,35 +237,4 @@ class B2C extends TandaClient
         return $payment;
     }
 	
-    /**
-     * Process results for b2c function.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \EdLugz\Tanda\Models\TandaTransaction
-     */
-    public function result(Request $request): TandaTransaction
-    {
-        $transaction = TandaTransaction::where('request_id', $request->input('transactionId'))->first();
-		
-		if($request->input('status') == '000000'){
-			$data = [
-				'request_status' => $request->input('status'),
-				'request_message' => $request->input('message'),
-				'receipt_number' => $request->input('receiptNumber'),
-				'transaction_receipt' => $request->input('value'),
-				'timestamp' => $request->input('timestamp'),
-			];
-		} else {
-			$data = [
-				'request_status' => $request->input('status'),
-				'request_message' => $request->input('message'),
-				'timestamp' => $request->input('timestamp'),
-			];
-		}
-		
-        $transaction->update($data);
-
-        return $transaction;
-    }
 }

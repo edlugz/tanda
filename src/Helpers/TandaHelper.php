@@ -2,6 +2,8 @@
 
 namespace EdLugz\Tanda\Helpers;
 
+use EdLugz\Tanda\Models\TandaTransaction;
+
 class TandaHelper
 {
     /**
@@ -28,5 +30,38 @@ class TandaHelper
         } else {
             return '0';
         }
+    }
+	
+	
+    /**
+     * Process results.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \EdLugz\Tanda\Models\TandaTransaction
+     */
+    public function result(Request $request): TandaTransaction
+    {
+        $transaction = TandaTransaction::where('request_id', $request->input('transactionId'))->first();
+		
+		if($request->input('status') == '000000'){
+			$data = [
+				'request_status' => $request->input('status'),
+				'request_message' => $request->input('message'),
+				'receipt_number' => $request->input('receiptNumber'),
+				'transaction_receipt' => $request->input('value'),
+				'timestamp' => $request->input('timestamp'),
+			];
+		} else {
+			$data = [
+				'request_status' => $request->input('status'),
+				'request_message' => $request->input('message'),
+				'timestamp' => $request->input('timestamp'),
+			];
+		}
+		
+        $transaction->update($data);
+
+        return $transaction;
     }
 }
