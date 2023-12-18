@@ -27,7 +27,7 @@ class Transaction extends TandaClient
     {
         parent::__construct();
 		
-        $this->orgId = config('tanda.org_id'); 
+        $this->orgId = config('tanda.organisation_id'); 
 		
     }
 	

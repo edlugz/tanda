@@ -35,7 +35,7 @@ class Airtime extends TandaClient
     {
         parent::__construct();
 		
-        $this->orgId = config('tanda.org_id'); 
+        $this->orgId = config('tanda.organisation_id'); 
 		
 		$this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
 		

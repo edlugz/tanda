@@ -27,7 +27,7 @@ class SubWallet extends TandaClient
     {
         parent::__construct();
 		
-        $this->orgId = config('tanda.org_id'); 
+        $this->orgId = config('tanda.organisation_id'); 
 		
 		$this->endPoint = 'wallets/v1/resellers/'.$this->orgId.'/wallets';
 
