@@ -46,8 +46,8 @@ class TandaClient
      * @var array
      */
     protected array $base_url = [
-        'uat' => config('tanda.mode');
-        'live' => config('tanda.mode');
+        'uat' => config('tanda.base_url');
+        'live' => config('tanda.base_url');
     ];
 
     /**
@@ -158,10 +158,10 @@ class TandaClient
                 $message = 'Tanda APIs: '.$response->Envelope->Body->Fault->faultstring;
                 throw new TandaRequestException($message, $e->getCode());
             }			
-            throw new TandaRequestException('Tanda APIs: '.$response->message, $e->getCode());			
+            throw new TandaRequestException('Tanda APIs: '.$response->status, $e->getCode());			
         } catch (ClientException $e) {			
 			$response = json_decode($e->getResponse()->getBody()->getContents());			
-            throw new TandaRequestException('Tanda APIs: '.$response->message, $e->getCode());
+            throw new TandaRequestException('Tanda APIs: '.$response->status, $e->getCode());
         } catch (GuzzleException $e) {
             throw new SasaPayRequestException('SasaPay APIs: '.$e->getMessage(), $e->getCode());
         }
