@@ -46,8 +46,8 @@ class TandaClient
      * @var array
      */
     protected array $base_url = [
-        'uat' => config('tanda.mode');,
-        'live' => config('tanda.mode');,
+        'uat' => config('tanda.mode');
+        'live' => config('tanda.mode');
     ];
 
     /**
