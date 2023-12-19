@@ -7,6 +7,7 @@ use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
+use Monolog\Level;
 
 class Log
 {
@@ -16,14 +17,14 @@ class Log
      * @var array
      */
     protected static $levels = [
-        'DEBUG' => Logger::DEBUG,
-        'INFO' => Logger::INFO,
-        'NOTICE' => Logger::NOTICE,
-        'WARNING' => Logger::WARNING,
-        'ERROR' => Logger::ERROR,
-        'CRITICAL' => Logger::CRITICAL,
-        'ALERT' => Logger::ALERT,
-        'EMERGENCY' => Logger::EMERGENCY,
+        'DEBUG' => Level::DEBUG,
+        'INFO' => Level::INFO,
+        'NOTICE' => Level::NOTICE,
+        'WARNING' => Level::WARNING,
+        'ERROR' => Level::ERROR,
+        'CRITICAL' => Level::CRITICAL,
+        'ALERT' => Level::ALERT,
+        'EMERGENCY' => Level::EMERGENCY,
     ];
 
     /**
