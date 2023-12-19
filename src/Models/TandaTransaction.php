@@ -1,6 +1,6 @@
 <?php
 
-namespace Edlugz\Tanda\Models;
+namespace EdLugz\Tanda\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

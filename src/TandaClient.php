@@ -3,6 +3,7 @@
 namespace EdLugz\Tanda;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Illuminate\Support\Facades\Route;
@@ -163,7 +164,7 @@ class TandaClient
 			$response = json_decode($e->getResponse()->getBody()->getContents());			
             throw new TandaRequestException('Tanda APIs: '.$response->status, $e->getCode());
         } catch (GuzzleException $e) {
-            throw new SasaPayRequestException('SasaPay APIs: '.$e->getMessage(), $e->getCode());
+            throw new TandaRequestException('SasaPay APIs: '.$e->getMessage(), $e->getCode());
         }
     }
 }
