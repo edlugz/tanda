@@ -17,14 +17,14 @@ class Log
      * @var array
      */
     protected static $levels = [
-        'DEBUG' => Level::DEBUG,
-        'INFO' => Level::INFO,
-        'NOTICE' => Level::NOTICE,
-        'WARNING' => Level::WARNING,
-        'ERROR' => Level::ERROR,
-        'CRITICAL' => Level::CRITICAL,
-        'ALERT' => Level::ALERT,
-        'EMERGENCY' => Level::EMERGENCY,
+        'DEBUG' => Level::Debug,
+        'INFO' => Level::Info,
+        'NOTICE' => Level::Notice,
+        'WARNING' => Level::Warning,
+        'ERROR' => Level::Error,
+        'CRITICAL' => Level::Critical,
+        'ALERT' => Level::Alert,
+        'EMERGENCY' => Level::Emergency,
     ];
 
     /**
