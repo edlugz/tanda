@@ -178,7 +178,7 @@ class B2C extends TandaClient
             'service_provider' => 'MOBILE',
             'merchant_wallet' => $merchantWallet,
             'amount' => $amount,
-            'account_number' => $mobileNumber
+            'account_number' => $mobileNumber,
             'service_provider_id' => $serviceProviderId
         ], $customFieldsKeyValue));
 		
