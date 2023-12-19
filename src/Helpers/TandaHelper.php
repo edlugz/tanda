@@ -3,6 +3,7 @@
 namespace EdLugz\Tanda\Helpers;
 
 use EdLugz\Tanda\Models\TandaTransaction;
+use Illuminate\Http\Request;
 
 class TandaHelper
 {
