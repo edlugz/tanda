@@ -92,8 +92,12 @@ class P2P extends TandaClient
 					"value" => $receiverWallet
 				]
 			],
-			"referenceParameters"  =>  [
-				"resultUrl" =>  $this->resultUrl
+			"referenceParameters" => [
+				[
+					"id" => "resultUrl",
+					"lable" => "resultUrl",
+					"value" =>  $this->resultUrl
+				]
 			],
 			"reference" => $reference
         ];

@@ -202,8 +202,12 @@ class B2C extends TandaClient
 					"value" => $amount
 				]
 			],
-			"referenceParameters" =>  [
-				"resultUrl" => $this->resultUrl
+			"referenceParameters" => [
+				[
+					"id" => "resultUrl",
+					"lable" => "resultUrl",
+					"value" =>  $this->resultUrl
+				]
 			],
 			"reference" => $reference
         ];

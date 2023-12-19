@@ -93,6 +93,13 @@ class C2B extends TandaClient
 					"value" => $amount,
 				]
 			],
+			"referenceParameters" => [
+				[
+					"id" => "resultUrl",
+					"lable" => "resultUrl",
+					"value" =>  $this->resultUrl
+				]
+			],
 			"reference" => $reference
         ];
 
