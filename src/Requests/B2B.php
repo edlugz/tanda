@@ -39,7 +39,7 @@ class B2B extends TandaClient
 		
 		$this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
 		
-		$this->resultUrl = config('tanda.result_url.b2b');;
+		$this->resultUrl = config('tanda.result_url');;
 
 		
     }
