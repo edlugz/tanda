@@ -47,7 +47,7 @@ Tanda::subwallet()->update($walletId, $name, $username, $password, $ipnUrl);
 
 C2B - Fund Wallet (send stk push to mobile number)
 ```bash
-Tanda::C2B()->request(string $serviceProviderId, $merchantWallet, $mobileNumber, $amount, $customFieldsKeyValue = []);
+Tanda::C2B()->request($serviceProviderId, $merchantWallet, $mobileNumber, $amount, $customFieldsKeyValue = []);
 ```
 
 P2P -  send to internal wallets
