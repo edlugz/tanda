@@ -44,7 +44,7 @@ class SubWallet extends TandaClient
 		
 		@return mixed
      */
-    protected function create($name, $ipnUrl, $username, $password)
+    public function create($name, $ipnUrl, $username, $password)
     {
         $parameters = [
             "name" => $name,
@@ -61,7 +61,7 @@ class SubWallet extends TandaClient
 	 
 		@return mixed
      */
-    protected function get()
+    public function get()
     {
         return $this->call($this->endPoint, [], 'GET');
     }
@@ -77,7 +77,7 @@ class SubWallet extends TandaClient
 		
 		@return mixed
      */
-    protected function update($walletId, $name, $ipnUrl = 'https://webhook.site/cbfb845b-f92e-40be-bf56-30cf5da0a70b', $username, $password)
+    public function update($walletId, $name, $ipnUrl = 'https://webhook.site/cbfb845b-f92e-40be-bf56-30cf5da0a70b', $username, $password)
     {
 		$parameters = [
             "name" => $name,

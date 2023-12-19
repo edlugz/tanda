@@ -53,7 +53,7 @@ class Airtime extends TandaClient
 		
 		@return TandaTransaction
      */
-    protected function prepaid(
+    public function prepaid(
 		$serviceProviderId, 
 		$amount, 
 		$mobileNumber,

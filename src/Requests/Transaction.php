@@ -38,9 +38,8 @@ class Transaction extends TandaClient
 		
 		@return mixed
      */
-    protected function status($reference)
+    public function status($reference)
     {
-
         return $this->call('https://tandaio-api-uats.tanda.co.ke/io/v2/organizations/'.$this->orgId.'/requests/'.$reference.'', [], 'GET');
     }
 	

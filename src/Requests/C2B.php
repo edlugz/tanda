@@ -55,7 +55,7 @@ class C2B extends TandaClient
 		
 		@return TandaFunding
      */
-    protected function request(
+    public function request(
 		string $serviceProviderId, 
 		string $merchantWallet, 
 		string $mobileNumber, 

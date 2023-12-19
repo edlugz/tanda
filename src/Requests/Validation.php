@@ -15,7 +15,7 @@ class Validation extends TandaClient
 		
 		@return mixed
      */
-    protected function till($countryId = 'KE', $mmoId, $till)
+    public function till($countryId = 'KE', $mmoId, $till)
     {
 
         return $this->call('https://tandaio-api-uats.tanda.co.ke/registry/v1/countries/'.$countryId.'/mmos/'.$mmoId.'/merchants/'.$till.'', [], 'GET');
@@ -30,7 +30,7 @@ class Validation extends TandaClient
 		
 		@return mixed
      */
-    protected function paybill($countryId = 'KE', $mmoId, $businessShortCode)
+    public function paybill($countryId = 'KE', $mmoId, $businessShortCode)
     {
 
         return $this->call('https://tandaio-api-uats.tanda.co.ke/registry/v1/countries/'.$countryId.'/mmos/'.$mmoId.'/businesses/'.$businessShortcode.'', [], 'GET');

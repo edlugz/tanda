@@ -54,7 +54,7 @@ class P2P extends TandaClient
 		
 		@return TandaTransaction
      */
-    protected function send(
+    public function send(
 		string $senderWallet, 
 		string $receiverWallet, 
 		string $amount,

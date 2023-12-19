@@ -55,7 +55,7 @@ class B2B extends TandaClient
 		
 		@return TandaTransaction
      */
-    protected function buygoods(
+    public function buygoods(
 		string $merchantWallet, 
 		string $amount, 
 		string $till, 
@@ -151,7 +151,7 @@ class B2B extends TandaClient
 		
 		@return TandaTransaction
      */
-    protected function paybill(
+    public function paybill(
 		string $merchantWallet, 
 		string $amount, 
 		string $paybill, 
