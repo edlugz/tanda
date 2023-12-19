@@ -50,7 +50,7 @@ class TandaHelper
 				'request_status' => $request->input('status'),
 				'request_message' => $request->input('message'),
 				'receipt_number' => $request->input('receiptNumber'),
-				'transaction_receipt' => $request->input('value'),
+				'transaction_receipt' => $request->input('resultParameters')[0]['value'],
 				'timestamp' => $request->input('timestamp'),
 			];
 		} else {
