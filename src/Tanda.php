@@ -108,7 +108,7 @@ class Tanda
     /**
      * 	Helper functions
      *
-     * @return Helper
+     * @return TandaHelper
      */
     public function helper() : TandaHelper
     {
