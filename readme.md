@@ -55,9 +55,9 @@ P2P -  send to internal wallets
 Tanda::P2P()->send($senderWallet, $receiverWallet, $amount, $customFieldsKeyValue = []);
 ```
 
-B2C -  send to bank accounts
+B2C -  send to bank accounts and mobile wallets
 ```bash
-Tanda::B2C()->bank($merchantWallet, $bankCode, $amount, $accountNumber, $accountName, $narration, $customFieldsKeyValue = []);
+Tanda::B2C()->bank($merchantWallet, $bankCode, $amount, $accountNumber, $narration, $customFieldsKeyValue = []);
 Tanda::B2C()->mobile($merchantWallet, $serviceProviderId, $amount, $mobileNumber, $customFieldsKeyValue = []);
 ```
 

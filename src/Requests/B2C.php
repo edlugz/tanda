@@ -61,8 +61,7 @@ class B2C extends TandaClient
 		string $merchantWallet, 
 		string $bankCode, 
 		string $amount, 
-		string $accountNumber, 
-		string $accountName, 
+		string $accountNumber,
 		string $narration,
 		array $customFieldsKeyValue = []
 	): TandaTransaction {
@@ -89,18 +88,13 @@ class B2C extends TandaClient
 				],
 				[
 					"id" => "serviceProviderId",
-					"label" => "serviceProviderId",
+					"label" => "Bank Code",
 					"value" => $bankCode
 				],
 				[
 					"id" => "accountNumber",
 					"label" => "Bank Ac Number",
 					"value" => $accountNumber
-				],
-				[
-					"id" => "accountName",
-					"label" => "accountName",
-					"value" => $accountName
 				],
 				[
 					"id" => "amount",
