@@ -164,7 +164,7 @@ class TandaClient
 			$response = json_decode($e->getResponse()->getBody()->getContents());			
             throw new TandaRequestException('Tanda APIs: '.$response->status, $e->getCode());
         } catch (GuzzleException $e) {
-            throw new TandaRequestException('SasaPay APIs: '.$e->getMessage(), $e->getCode());
+            throw new TandaRequestException('Tanda APIs: '.$e->getMessage(), $e->getCode());
         }
     }
 }
