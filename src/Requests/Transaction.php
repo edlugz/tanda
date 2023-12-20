@@ -2,12 +2,14 @@
 
 namespace EdLugz\Tanda\Requests;
 
+use EdLugz\Tanda\Models\TandaTransaction;
+use EdLugz\Tanda\Exceptions\TandaRequestException;
 use EdLugz\Tanda\TandaClient;
 
 class Transaction extends TandaClient
 {
 	/**
-     * send p2p request end point on Tanda API.
+     * Check transaction status end point on Tanda API.
      *
      * @var string
      */
@@ -21,7 +23,7 @@ class Transaction extends TandaClient
     protected $orgId;
 	
 	/**
-     * P2P constructor.
+     * Transaction constructor.
      */
     public function __construct()
     {
@@ -29,18 +31,53 @@ class Transaction extends TandaClient
 		
         $this->orgId = config('tanda.organisation_id'); 
 		
+		$this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests/';
+		
     }
 	
     /**
      * Transaction status query
-     
-      	@param string reference
-		
-		@return mixed
+	 *
+	 * @param string reference		
+	 *
+	 * @throws  TandaRequestException
+	 *
+	 * @return TandaTransaction
      */
-    public function status($reference)
+    public function status($reference) : TandaTransaction
     {
-        return $this->call('https://tandaio-api-uats.tanda.co.ke/io/v2/organizations/'.$this->orgId.'/requests/'.$reference.'', [], 'GET');
+		$transaction = TandaTransaction::where('payment_reference', $reference)->first();
+		
+		try {
+			
+			$response = $this->call($this->endPoint.''.$reference.'', [], 'GET');
+			
+		} catch(TandaRequestException $e){
+			$response = [
+                'status'         => $e->getCode(),
+                'responseCode'   => $e->getCode(),
+                'message'        => $e->getMessage(),
+            ];
+
+            $response = (object) $response;
+		}
+		
+		$data = [
+            'response_status'      => $response->status,
+            'response_message'       => $response->message,
+        ];
+
+        if ($response->status == '000001') {
+            $data = array_merge($data, [
+                'receipt_number' => $response->receiptNumber,
+				'transaction_receipt' => $response->resultParameters[0]['value'],
+				'timestamp' => $response->datetimeCompleted,
+            ]);
+        }
+
+        $transaction->update($data);
+
+        return $transaction;
     }
 	
 }
