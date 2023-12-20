@@ -89,9 +89,11 @@ class Utility extends TandaClient
 				]
 			],
 			"referenceParameters" =>  [
-				"id" => "resultUrl",
-				"label" => "Callback",
-				"value" => $this->resultUrl
+				[
+					"id" => "resultUrl",
+					"label" => "Callback",
+					"value" => $this->resultUrl
+				]
 
 			],
 			"reference" => $reference
@@ -175,9 +177,11 @@ class Utility extends TandaClient
 				]
 			],
 			"referenceParameters" =>  [
-				"id" => "resultUrl",
-				"label" => "Callback",
-				"value" => $this->resultUrl
+				[
+					"id" => "resultUrl",
+					"label" => "Callback",
+					"value" => $this->resultUrl
+				]
 
 			],
 			"reference" => $reference
@@ -257,9 +261,11 @@ class Utility extends TandaClient
 				]
 			],
 			"referenceParameters" =>  [
-				"id" => "resultUrl",
-				"label" => "Callback",
-				"value" => $this->resultUrl
+				[
+					"id" => "resultUrl",
+					"label" => "Callback",
+					"value" => $this->resultUrl
+				]
 
 			],
 			"reference" => $reference
