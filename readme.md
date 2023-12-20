@@ -27,6 +27,7 @@ Fill in all the details you will be requiring for your application. Here are the
 
 ```bash
 TANDA_RESULT_URL
+TANDA_C2B_RESULT_URL
 TANDA_CLIENT_ID
 TANDA_CLIENT_SECRET
 TANDA_ORG_ID
@@ -89,9 +90,14 @@ Helper functions - get mno network based on mobile number
 Tanda::helper()->serviceProvider($mobileNumber);
 ```
 
-Helper functions - receive results
+Helper functions - receive payout results
 ```bash
-Tanda::helper()->result($data);
+Tanda::helper()->payout($data);
+```
+
+Helper functions - receive c2b results
+```bash
+Tanda::helper()->c2b($data);
 ```
 
 
