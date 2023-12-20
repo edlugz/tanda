@@ -63,8 +63,8 @@ class Transaction extends TandaClient
 		}
 		
 		$data = [
-            'response_status'      => $response->status,
-            'response_message'       => $response->message,
+            'request_status'      => $response->status,
+            'request_message'       => $response->message,
         ];
 
         if ($response->status == '000001') {
