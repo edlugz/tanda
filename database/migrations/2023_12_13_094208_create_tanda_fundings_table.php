@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('receipt_number')->nullable();
             $table->string('timestamp')->nullable();
             $table->string('transaction_reference')->nullable();
+			$table->softDeletes();
             $table->timestamps();
         });
     }

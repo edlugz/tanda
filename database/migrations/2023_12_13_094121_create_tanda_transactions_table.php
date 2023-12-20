@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('receipt_number')->nullable();
             $table->string('transaction_receipt')->nullable();
             $table->string('timestamp')->nullable();
+			$table->softDeletes();
             $table->timestamps();
         });
     }

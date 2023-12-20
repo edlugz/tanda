@@ -19,6 +19,7 @@ return new class extends Migration
 			$table->string('ipnUrl');
 			$table->string('username');
 			$table->string('password');
+			$table->softDeletes();
             $table->timestamps();
         });
     }
