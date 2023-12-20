@@ -70,7 +70,10 @@ class SubWallet extends TandaClient
         ];
 
 	try {
+		
 		$response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
+		$response->status = '000001';
+		
 	} catch(TandaRequestException $e){
 		$response = [
 			'status'         => $e->getCode(),
@@ -78,16 +81,15 @@ class SubWallet extends TandaClient
 			'message'        => $e->getMessage(),
 		];
 
-            $response = (object) $response;
+        $response = (object) $response;
 	}
 
-	if ($response) {
+	if ($response->status == '000001') {
             $data = [
                 'wallet_account_number'  => $response->account
             ];
+			$wallet->update($data);
         }
-
-        $wallet->update($data);
 
         return $wallet;
 
@@ -114,8 +116,10 @@ class SubWallet extends TandaClient
 		
 		@return mixed
      */
-    public function update($walletId, $name, $ipnUrl = 'https://webhook.site/cbfb845b-f92e-40be-bf56-30cf5da0a70b', $username, $password)
+    public function update($walletId, $name, $ipnUrl, $username, $password) : TandaWallet
     {
+		$wallet = TandaWallet::where('wallet_account_number', $walletId)->first();
+		
 		$parameters = [
             "name" => $name,
 			"ipnUrl" => $ipnUrl,
@@ -123,7 +127,27 @@ class SubWallet extends TandaClient
 			"password" => $password
         ];
 		
-        return $this->call($this->endPoint.'/'.$walletId, ['json' => $parameters], 'PATCH');
+		try {
+		
+			$response = $this->call($this->endPoint.'/'.$walletId, ['json' => $parameters], 'PATCH');
+			$response->status = '000001';
+			
+		} catch(TandaRequestException $e){
+			$response = [
+				'status'         => $e->getCode(),
+				'responseCode'   => $e->getCode(),
+				'message'        => $e->getMessage(),
+			];
+
+			$response = (object) $response;
+		}
+
+		if ($response->status == '000001') {
+			
+			$wallet->update($data);
+		}
+
+		return $wallet;
     }
 	
 }

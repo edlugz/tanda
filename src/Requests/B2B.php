@@ -3,6 +3,7 @@
 namespace EdLugz\Tanda\Requests;
 
 use EdLugz\Tanda\Models\TandaTransaction;
+use EdLugz\Tanda\Exceptions\TandaRequestException;
 use EdLugz\Tanda\TandaClient;
 use Illuminate\Support\Str;
 
