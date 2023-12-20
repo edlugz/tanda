@@ -41,7 +41,7 @@ class C2B extends TandaClient
 		
 		$this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
 		
-		$this->resultUrl = config('tanda.result_url');		
+		$this->resultUrl = config('tanda.fund_result_url');		
     }
 
     /**
