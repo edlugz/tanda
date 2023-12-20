@@ -74,36 +74,36 @@ class Airtime extends TandaClient
             'account_number' => $mobileNumber,
             'service_provider_id' => $serviceProviderId
         ], $customFieldsKeyValue));
-		
-        $parameters = [
-			"commandId" => "TopupFlexi",
-			"serviceProviderId" => $serviceProviderId,
-			"requestParameters" =>  [
+		$parameters = [
+            "commandId" => "TopupFlexi",
+            "serviceProviderId" => $serviceProviderId,
+            "requestParameters" => [
 				[
 					"id" => "merchantWallet",
 					"label" => "wallet",
 					"value" => $merchantWallet
 				],
-				[
-					"id" => "accountNumber",
-					"label" => "Phone Number",
-					"value" => $mobileNumber,
-				],
-				[
-					"id" => "amount",
-					"label" => "Amount",
-					"value" => $amount,
-				]
-			],
-			"referenceParameters" =>  [
-				"id" => "resultUrl",
-				"label" => "Callback",
-				"value" => $this->resultUrl
-
-			],
+                [
+                    "id" => "amount",
+                    "value" => $amount,
+                    "label" => "Amountt"
+                ],
+                [
+                    "id" => "accountNumber",
+                    "value" => $mobileNumber,
+                    "label" => "Phone No."
+                ]
+            ],
+            "referenceParameters" => [
+                [
+                    "id" => "resultUrl",
+                    "value" => $this->resultUrl,
+                    "label" => "Hook"
+                ]
+            ],
 			"reference" => $reference
         ];
-        
+		
 		try {
 			$response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
 		} catch(TandaRequestException $e){
