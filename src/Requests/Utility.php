@@ -175,8 +175,8 @@ class Utility extends TandaClient
 				]
 			],
 			"referenceParameters" =>  [
-				"id" => "resultUrl"
-				"label" => "Callback"
+				"id" => "resultUrl",
+				"label" => "Callback",
 				"value" => $this->resultUrl
 
 			],
@@ -248,7 +248,7 @@ class Utility extends TandaClient
 				[
 					"id" => "accountNumber",
 					"label" => "Account",
-					"value" => $mobileNumber,
+					"value" => $accountNumber,
 				],
 				[
 					"id" => "amount",
