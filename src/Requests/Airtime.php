@@ -96,8 +96,8 @@ class Airtime extends TandaClient
 				]
 			],
 			"referenceParameters" =>  [
-				"id" => "resultUrl"
-				"label" => "Callback"
+				"id" => "resultUrl",
+				"label" => "Callback",
 				"value" => $this->resultUrl
 
 			],

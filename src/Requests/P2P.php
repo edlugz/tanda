@@ -68,7 +68,7 @@ class P2P extends TandaClient
         $payment = TandaTransaction::create(array_merge([
             'payment_reference' => $reference,
             'service_provider' => 'TANDA',
-            'merchant_wallet' => $merchantWallet,
+            'merchant_wallet' => $senderWallet,
             'amount' => $amount,
             'account_number' => $receiverWallet
         ], $customFieldsKeyValue));
@@ -80,7 +80,7 @@ class P2P extends TandaClient
 				[
 					"id" => "merchantWallet",
 					"label" => "merchantWallet",
-					"value" => $merchantWallet
+					"value" => $senderWallet
 				],
 				[
 					"id" => "amount",
