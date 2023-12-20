@@ -89,8 +89,8 @@ class Utility extends TandaClient
 				]
 			],
 			"referenceParameters" =>  [
-				"id" => "resultUrl"
-				"label" => "Callback"
+				"id" => "resultUrl",
+				"label" => "Callback",
 				"value" => $this->resultUrl
 
 			],
@@ -150,7 +150,7 @@ class Utility extends TandaClient
             'service_provider' => 'KPLC-PREPAID',
             //'merchant_wallet' => $merchantWallet, - check on validity of this in this transaction
             'amount' => $amount,
-            'account_number' => $accountNumber
+            'account_number' => $accountNumber,
             'service_provider_id' => 'KPLC'
         ], $customFieldsKeyValue));
 		
