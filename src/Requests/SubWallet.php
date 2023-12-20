@@ -144,7 +144,7 @@ class SubWallet extends TandaClient
 
 		if ($response->status == '000001') {
 			
-			$wallet->update($data);
+			$wallet->update($parameters);
 		}
 
 		return $wallet;
