@@ -237,7 +237,7 @@ class Utility extends TandaClient
             'service_provider' => $serviceProviderId,
             //'merchant_wallet' => $merchantWallet, - check on validity of this in this transaction
             'amount' => $amount,
-            'account_number' => $accountNumber
+            'account_number' => $accountNumber,
             'service_provider_id' => $serviceProviderId
         ], $customFieldsKeyValue));
 				
