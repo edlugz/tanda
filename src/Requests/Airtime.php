@@ -56,6 +56,7 @@ class Airtime extends TandaClient
 		@return TandaTransaction
      */
     public function prepaid(
+		$merchantWallet,
 		$serviceProviderId, 
 		$amount, 
 		$mobileNumber,
@@ -68,9 +69,9 @@ class Airtime extends TandaClient
         $payment = TandaTransaction::create(array_merge([
             'payment_reference' => $reference,
             'service_provider' => 'AIRTIME',
-            //'merchant_wallet' => $merchantWallet,
+            'merchant_wallet' => $merchantWallet,
             'amount' => $amount,
-            'account_number' => $accountNumber,
+            'account_number' => $mobileNumber,
             'service_provider_id' => $serviceProviderId
         ], $customFieldsKeyValue));
 		
@@ -78,6 +79,11 @@ class Airtime extends TandaClient
 			"commandId" => "TopupFlexi",
 			"serviceProviderId" => $serviceProviderId,
 			"requestParameters" =>  [
+				[
+					"id" => "merchantWallet",
+					"label" => "wallet",
+					"value" => $merchantWallet
+				],
 				[
 					"id" => "accountNumber",
 					"label" => "Phone Number",
