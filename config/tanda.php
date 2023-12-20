@@ -63,7 +63,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | API Result URLs
+    | API C2B Result URL
+    |--------------------------------------------------------------------------
+    |
+    | Here you can set the URLs that will handle the results from each of the
+    | APIs from TANDA
+    |
+    */
+
+    'c2b_result_url' => env('TANDA_C2B_RESULT_URL', ''),
+
+    /*
+    |--------------------------------------------------------------------------
+    | API Payout Result URL
     |--------------------------------------------------------------------------
     |
     | Here you can set the URLs that will handle the results from each of the
