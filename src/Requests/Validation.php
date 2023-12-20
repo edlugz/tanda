@@ -6,34 +6,45 @@ use EdLugz\Tanda\TandaClient;
 
 class Validation extends TandaClient
 {
+	/**
+     * till check end point on Tanda API.
+     *
+     * @var string
+     */
+    protected string $endPoint;
+	
+	/**
+     * Utility constructor.
+     */
+	public function __construct()
+    {		
+		$this->endPoint = 'registry/v1/countries/KE/mmos/';		
+    }
+	
     /**
      * Till lookup
-     
-      	@param string countryId
+   
       	@param string mmoId - mobile money operator id (Mpesa,AirtelMoney,TKash)
       	@param string till
 		
 		@return mixed
      */
-    public function till($countryId = 'KE', $mmoId, $till)
+    public function till($mmoId, $till)
     {
-
-        return $this->call('https://tandaio-api-uats.tanda.co.ke/registry/v1/countries/'.$countryId.'/mmos/'.$mmoId.'/merchants/'.$till.'', [], 'GET');
+        return $this->call($this->endPoint.''.$mmoId.'/merchants/'.$till.'', [], 'GET');
     }
 	
     /**
      * Business number (paybill) lookup
      
-      	@param string countryId
       	@param string mmoId - mobile money operator id (Mpesa,AirtelMoney,TKash)
       	@param string till
 		
 		@return mixed
      */
-    public function paybill($countryId = 'KE', $mmoId, $businessShortCode)
+    public function paybill($mmoId, $businessShortCode)
     {
-
-        return $this->call('https://tandaio-api-uats.tanda.co.ke/registry/v1/countries/'.$countryId.'/mmos/'.$mmoId.'/businesses/'.$businessShortcode.'', [], 'GET');
+        return $this->call($this->endPoint.''.$mmoId.'/businesses/'.$businessShortcode.'', [], 'GET');
     }
 	
 }
