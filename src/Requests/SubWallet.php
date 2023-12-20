@@ -3,6 +3,8 @@
 namespace EdLugz\Tanda\Requests;
 
 use EdLugz\Tanda\TandaClient;
+use EdLugz\Tanda\Models\TandaWallet;
+use EdLugz\Tanda\Exceptions\TandaRequestException;
 
 class SubWallet extends TandaClient
 {
@@ -41,11 +43,25 @@ class SubWallet extends TandaClient
       	@param string ipnUrl
       	@param string username
       	@param string password
+	@param array customFieldsKeyValue	
 		
-		@return mixed
+  	@return TandaWallet
      */
-    public function create($name, $ipnUrl, $username, $password)
+    public function create(
+	    string $name, 
+	    string $ipnUrl, 
+	    string $username, 
+	    string $password, 
+	    array $customFieldsKeyValue = []
+    ) : TandaWallet
     {
+	$wallet = TandaWallet::create(array_merge([
+		'name' => $name,
+		'ipnUrl' => $ipnUrl,
+		'username' => $username,
+		'password' => $password
+	], $customFieldsKeyValue));
+	    
         $parameters = [
             "name" => $name,
 			"ipnUrl" => $ipnUrl,
@@ -53,7 +69,28 @@ class SubWallet extends TandaClient
 			"password" => $password
         ];
 
-        return $this->call($this->endPoint, ['json' => $parameters], 'POST');
+	try {
+		$response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
+	} catch(TandaRequestException $e){
+		$response = [
+			'status'         => $e->getCode(),
+			'responseCode'   => $e->getCode(),
+			'message'        => $e->getMessage(),
+		];
+
+            $response = (object) $response;
+	}
+
+	if ($response) {
+            $data = [
+                'wallet_account_number'  => $response->account
+            ];
+        }
+
+        $wallet->update($data);
+
+        return $wallet;
+
     }
 	
     /**
