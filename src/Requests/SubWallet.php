@@ -86,7 +86,10 @@ class SubWallet extends TandaClient
 
 	if ($response->status == '000001') {
             $data = [
-                'wallet_account_number'  => $response->account
+				'wallet_id' => $response->id,
+                'wallet_account_number'  => $response->account,
+				'actual_balance' => $response->actual,
+				'available_balance' => $response->available
             ];
 			$wallet->update($data);
         }
@@ -111,6 +114,7 @@ class SubWallet extends TandaClient
 				
 				if($wallet){
 					$wallet->update([
+						'wallet_id' => $response->id,
 						'actual_balance' => $response->actual,
 						'available_balance' => $response->available
 					]);
