@@ -53,7 +53,7 @@ class TandaHelper
 		
 		if($request->input('status') == '000000'){
 			
-			$transactionReceipt = 0;
+			$transactionReceipt = $request->input('receiptNumber');
 			
 			if($request->input('resultParameters')){
 				$params = $request->input('resultParameters');
@@ -104,7 +104,7 @@ class TandaHelper
 		
 		if($request->input('status') == '000000'){
 			
-			$transactionReceipt = 0;
+			$transactionReceipt = $request->input('receiptNumber');
 			
 			if($request->input('resultParameters')){
 				$params = $request->input('resultParameters');
