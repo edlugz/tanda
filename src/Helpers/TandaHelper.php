@@ -45,6 +45,12 @@ class TandaHelper
     {
         $transaction = TandaTransaction::where('transaction_id', $request->input('transactionId'))->first();
 		
+		$transaction->update(
+			[
+				'json_result' => json_encode($request->all())
+			]
+		);
+		
 		if($request->input('status') == '000000'){
 			
 			$transactionRef = 0;
@@ -89,6 +95,12 @@ class TandaHelper
     public function c2b(Request $request): TandaFunding
     {
         $funding = TandaFunding::where('transaction_id', $request->input('transactionId'))->first();
+		
+		$funding->update(
+			[
+				'json_result' => json_encode($request->all())
+			]
+		);
 		
 		if($request->input('status') == '000000'){
 			
