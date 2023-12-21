@@ -108,7 +108,7 @@ class C2B extends TandaClient
 		try {
 			$response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
 			
-			$payment->update(
+			$funding->update(
 				[
 					'json_response' => json_encode($response)
 				]
