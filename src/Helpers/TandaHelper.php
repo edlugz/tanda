@@ -43,7 +43,7 @@ class TandaHelper
      */
     public function payout(Request $request): TandaTransaction
     {
-        $transaction = TandaTransaction::where('request_id', $request->input('transactionId'))->first();
+        $transaction = TandaTransaction::where('transaction_id', $request->input('transactionId'))->first();
 		
 		if($request->input('status') == '000000'){
 			$data = [
