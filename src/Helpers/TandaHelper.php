@@ -53,7 +53,7 @@ class TandaHelper
 		
 		if($request->input('status') == '000000'){
 			
-			$transactionRef = 0;
+			$transactionReceipt = 0;
 			
 			if($request->input('resultParameters')){
 				$params = $request->input('resultParameters');
@@ -62,14 +62,14 @@ class TandaHelper
 					$keyValueParams[$param['id']] = $param['value'];
 				}
 
-				$transactionRef = $keyValueParams['transactionRef'];
+				$transactionReceipt = $keyValueParams['transactionRef'];
 			}
 			
 			$data = [
 				'request_status' => $request->input('status'),
 				'request_message' => $request->input('message'),
 				'receipt_number' => $request->input('receiptNumber'),
-				'transaction_receipt' => $transactionRef,
+				'transaction_receipt' => $transactionReceipt,
 				'timestamp' => $request->input('timestamp'),
 			];
 		} else {
@@ -104,7 +104,7 @@ class TandaHelper
 		
 		if($request->input('status') == '000000'){
 			
-			$transactionRef = 0;
+			$transactionReceipt = 0;
 			
 			if($request->input('resultParameters')){
 				$params = $request->input('resultParameters');
@@ -113,14 +113,14 @@ class TandaHelper
 					$keyValueParams[$param['id']] = $param['value'];
 				}
 
-				$transactionRef = $keyValueParams['transactionRef'];
+				$transactionReceipt = $keyValueParams['transactionRef'];
 			}
 			
 			$data = [
 				'request_status' => $request->input('status'),
 				'request_message' => $request->input('message'),
 				'receipt_number' => $request->input('receiptNumber'),
-				'transaction_reference' => $transactionRef,
+				'transaction_reference' => $transactionReceipt,
 				'timestamp' => $request->input('timestamp'),
 			];
 		} else {
