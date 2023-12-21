@@ -102,7 +102,25 @@ class SubWallet extends TandaClient
      */
     public function get()
     {
-        return $this->call($this->endPoint, [], 'GET');
+        try {
+			
+			$responses = $this->call($this->endPoint, [], 'GET');
+			
+			foreach($responses as $response){
+				$wallet = TandaWallet::where('wallet_account_number', $response->account)->first();
+				
+				if($wallet){
+					$wallet->update([
+						'actual_balance' => $response->actual,
+						'available_balance' => $response->available
+					]);
+				}
+			}
+			
+			return true;
+		} catch(TandaRequestException $e){
+			return false;
+		}
     }
 	
     /**
