@@ -46,11 +46,24 @@ class TandaHelper
         $transaction = TandaTransaction::where('transaction_id', $request->input('transactionId'))->first();
 		
 		if($request->input('status') == '000000'){
+			
+			$transactionRef = 0;
+			
+			if($request->input('resultParameters')){
+				$params = $request->input('resultParameters');
+				$keyValueParams = [];
+				foreach ($params as $param) {
+					$keyValueParams[$param['id']] = $param['value'];
+				}
+
+				$transactionRef = $keyValueParams['transactionRef'];
+			}
+			
 			$data = [
 				'request_status' => $request->input('status'),
 				'request_message' => $request->input('message'),
 				'receipt_number' => $request->input('receiptNumber'),
-				'transaction_receipt' => $request->input('resultParameters')[0]['value'],
+				'transaction_receipt' => $transactionRef,
 				'timestamp' => $request->input('timestamp'),
 			];
 		} else {
@@ -78,11 +91,24 @@ class TandaHelper
         $funding = TandaFunding::where('transaction_id', $request->input('transactionId'))->first();
 		
 		if($request->input('status') == '000000'){
+			
+			$transactionRef = 0;
+			
+			if($request->input('resultParameters')){
+				$params = $request->input('resultParameters');
+				$keyValueParams = [];
+				foreach ($params as $param) {
+					$keyValueParams[$param['id']] = $param['value'];
+				}
+
+				$transactionRef = $keyValueParams['transactionRef'];
+			}
+			
 			$data = [
 				'request_status' => $request->input('status'),
 				'request_message' => $request->input('message'),
 				'receipt_number' => $request->input('receiptNumber'),
-				'transaction_reference' => $request->input('resultParameters')[0]['value'],
+				'transaction_reference' => $transactionRef,
 				'timestamp' => $request->input('timestamp'),
 			];
 		} else {
