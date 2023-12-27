@@ -13,14 +13,14 @@ class SubWallet extends TandaClient
      *
      * @var string
      */
-    protected $endPoint;
+    protected string $endPoint;
 	
 	/**
      * The organisation ID assigned for the application on Tanda API.
      *
      * @var string
      */
-    protected $orgId;
+    protected string $orgId;
 
     /**
      * SubWallet constructor.
@@ -38,14 +38,12 @@ class SubWallet extends TandaClient
 
     /**
      * Create a new Sub wallet
-     
-      	@param string name
-      	@param string ipnUrl
-      	@param string username
-      	@param string password
-	@param array customFieldsKeyValue	
-		
-  	@return TandaWallet
+     * @param string $name
+     * @param string $ipnUrl
+     * @param string $username
+     * @param string $password
+     * @param array $customFieldsKeyValue
+     * @return \EdLugz\Tanda\Models\TandaWallet
      */
     public function create(
 	    string $name, 
@@ -97,13 +95,13 @@ class SubWallet extends TandaClient
         return $wallet;
 
     }
-	
+
     /**
      * Get Sub wallets
-	 
-		@return mixed
+     *
+     * @return bool
      */
-    public function get()
+    public function get(): bool
     {
         try {
 			

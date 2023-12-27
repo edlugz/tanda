@@ -13,14 +13,14 @@ class Transaction extends TandaClient
      *
      * @var string
      */
-    protected $endPoint;
+    protected string $endPoint;
 	
 	/**
      * The organisation ID assigned for the application on Tanda API.
      *
      * @var string
      */
-    protected $orgId;
+    protected string $orgId;
 	
 	/**
      * Transaction constructor.
@@ -38,13 +38,13 @@ class Transaction extends TandaClient
     /**
      * Transaction status query
 	 *
-	 * @param string reference		
-	 *
-	 * @throws  TandaRequestException
+	 * @param string $reference
 	 *
 	 * @return TandaTransaction
-     */
-    public function status($reference) : TandaTransaction
+     *@throws  TandaRequestException
+	 *
+	 */
+    public function status(string $reference) : TandaTransaction
     {
 		$transaction = TandaTransaction::where('payment_reference', $reference)->first();
 		

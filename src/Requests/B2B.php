@@ -48,14 +48,12 @@ class B2B extends TandaClient
 
     /**
      * Send money from merchant wallet to till
-     
-      	@param string merchantWallet
-      	@param string amount
-      	@param string till
-      	@param string contact
-      	@param array $customFieldsKeyValue
-		
-		@return TandaTransaction
+     * @param string $merchantWallet
+     * @param string $amount
+     * @param string $till
+     * @param string $contact
+     * @param array $customFieldsKeyValue
+     * @return \EdLugz\Tanda\Models\TandaTransaction
      */
     public function buygoods(
 		string $merchantWallet, 
@@ -147,18 +145,16 @@ class B2B extends TandaClient
 
         return $payment;
     }
-	
+
     /**
      * Send money from merchant wallet to paybill business numbers
-     
-      	@param string merchantWallet
-      	@param string amount
-      	@param string paybill
-      	@param string accountNumber
-      	@param string contact
-      	@param array customFieldsKeyValue
-		
-		@return TandaTransaction
+     * @param string $merchantWallet
+     * @param string $amount
+     * @param string $paybill
+     * @param string $accountNumber
+     * @param string $contact
+     * @param array $customFieldsKeyValue
+     * @return \EdLugz\Tanda\Models\TandaTransaction
      */
     public function paybill(
 		string $merchantWallet, 

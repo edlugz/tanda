@@ -46,15 +46,12 @@ class C2B extends TandaClient
 
     /**
      * Receive payments
-     
-      	@param string serviceProviderId - MPESA/AIRTELMONEY	 	
-      	@param string merchantWallet
-      	@param string receiverWallet
-      	@param string mobileNumber
-      	@param string amount
-      	@param array customFieldsKeyValue
-		
-		@return TandaFunding
+     * @param string $serviceProviderId - MPESA/AIRTELMONEY
+     * @param string $merchantWallet
+     * @param string $mobileNumber
+     * @param string $amount
+     * @param array $customFieldsKeyValue
+     * @return \EdLugz\Tanda\Models\TandaFunding
      */
     public function request(
 		string $serviceProviderId, 

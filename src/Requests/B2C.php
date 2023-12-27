@@ -47,16 +47,13 @@ class B2C extends TandaClient
 
     /**
      * Send money from merchant wallet to bank
-     
-      	@param string merchantWallet
-      	@param string bankCode - as provided
-      	@param string amount
-      	@param string accountNumber
-      	@param string accountName
-      	@param string narration
-      	@param array customFieldsKeyValue
-		
-		@return TandaTransaction
+     * @param string $merchantWallet
+     * @param string $bankCode
+     * @param string $amount
+     * @param string $accountNumber
+     * @param string $narration
+     * @param array $customFieldsKeyValue
+     * @return \EdLugz\Tanda\Models\TandaTransaction
      */
     public function bank(
 		string $merchantWallet, 
@@ -152,18 +149,15 @@ class B2C extends TandaClient
 
         return $payment;
     }
-	
+
     /**
      * Send money from merchant wallet to mobile wallet(s)
-     
-      	@param string merchantWallet
-      	@param string serviceProviderId - (MPESA / AIRTELMONEY / TKASH / EQUITEL)
-      	@param string amount
-      	@param string mobileNumber
-      	@param string narration
-      	@param array customFieldsKeyValue
-		
-		@return TandaTransaction
+     * @param string $merchantWallet
+     * @param string $serviceProviderId - (MPESA / AIRTELMONEY / TKASH / EQUITEL)
+     * @param string $amount
+     * @param string $mobileNumber
+     * @param array $customFieldsKeyValue
+     * @return \EdLugz\Tanda\Models\TandaTransaction
      */
     public function mobile(
 		string $merchantWallet, 

@@ -47,13 +47,11 @@ class P2P extends TandaClient
 
     /**
      * Send money from one Sub wallet to another Sub wallet instantly.
-     
-      	@param string senderWallet
-      	@param string receiverWallet
-      	@param string amount
-      	@param array customFieldsKeyValue
-		
-		@return TandaTransaction
+     * @param string $senderWallet
+     * @param string $receiverWallet
+     * @param string $amount
+     * @param array $customFieldsKeyValue
+     * @return \EdLugz\Tanda\Models\TandaTransaction
      */
     public function send(
 		string $senderWallet, 

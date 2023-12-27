@@ -14,21 +14,21 @@ class Airtime extends TandaClient
      *
      * @var string
      */
-    protected $endPoint;
-	
-	/**
+    protected string $endPoint;
+
+    /**
      * The organisation ID assigned for the application on Tanda API.
      *
      * @var string
      */
-    protected $orgId;
+    protected string $orgId;
 
-	/**
+    /**
      * The result URL assigned for airtime transactions on Tanda API.
      *
      * @var string
      */
-    protected $resultUrl;
+    protected string $resultUrl;
 
     /**
      * Airtime constructor.
@@ -36,36 +36,36 @@ class Airtime extends TandaClient
     public function __construct()
     {
         parent::__construct();
-		
-        $this->orgId = config('tanda.organisation_id'); 
-		
-		$this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
-		
-		$this->resultUrl = config('tanda.result_url');
-		
+
+        $this->orgId = config('tanda.organisation_id');
+
+        $this->endPoint = 'io/v2/organizations/' . $this->orgId . '/requests';
+
+        $this->resultUrl = config('tanda.result_url');
+
     }
 
     /**
      * Purchase pinless prepaid airtime
-     
-      	@param string serviceProviderId
-      	@param string amount
-      	@param string mobileNumber
-      	@param array customFieldsKeyValue
-		
-		@return TandaTransaction
+     * @param $merchantWallet
+     * @param $serviceProviderId
+     * @param $amount
+     * @param $mobileNumber
+     * @param array $customFieldsKeyValue
+     * @return \EdLugz\Tanda\Models\TandaTransaction
      */
     public function prepaid(
-		$merchantWallet,
-		$serviceProviderId, 
-		$amount, 
-		$mobileNumber,
-		array $customFieldsKeyValue = []
-	): TandaTransaction {
-		
-		$reference = (string) Str::ulid();
-		
-		/** @var TandaTransaction $payment */
+        $merchantWallet,
+        $serviceProviderId,
+        $amount,
+        $mobileNumber,
+        array $customFieldsKeyValue = []
+    ): TandaTransaction
+    {
+
+        $reference = (string)Str::ulid();
+
+        /** @var TandaTransaction $payment */
         $payment = TandaTransaction::create(array_merge([
             'payment_reference' => $reference,
             'service_provider' => 'AIRTIME',
@@ -74,15 +74,15 @@ class Airtime extends TandaClient
             'account_number' => $mobileNumber,
             'service_provider_id' => $serviceProviderId
         ], $customFieldsKeyValue));
-		$parameters = [
+        $parameters = [
             "commandId" => "TopupFlexi",
             "serviceProviderId" => $serviceProviderId,
             "requestParameters" => [
-				[
-					"id" => "merchantWallet",
-					"label" => "wallet",
-					"value" => $merchantWallet
-				],
+                [
+                    "id" => "merchantWallet",
+                    "label" => "wallet",
+                    "value" => $merchantWallet
+                ],
                 [
                     "id" => "amount",
                     "value" => $amount,
@@ -101,36 +101,36 @@ class Airtime extends TandaClient
                     "label" => "Hook"
                 ]
             ],
-			"reference" => $reference
+            "reference" => $reference
         ];
-		
-		try {
-			$response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
-			
-			$payment->update(
-				[
-					'json_response' => json_encode($response)
-				]
-			);
-			
-		} catch(TandaRequestException $e){
-			$response = [
-                'status'         => $e->getCode(),
-                'responseCode'   => $e->getCode(),
-                'message'        => $e->getMessage(),
+
+        try {
+            $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
+
+            $payment->update(
+                [
+                    'json_response' => json_encode($response)
+                ]
+            );
+
+        } catch (TandaRequestException $e) {
+            $response = [
+                'status' => $e->getCode(),
+                'responseCode' => $e->getCode(),
+                'message' => $e->getMessage(),
             ];
 
-            $response = (object) $response;
-		}
-		
-		$data = [
-            'response_status'      => $response->status,
-            'response_message'       => $response->message,
+            $response = (object)$response;
+        }
+
+        $data = [
+            'response_status' => $response->status,
+            'response_message' => $response->message,
         ];
 
         if ($response->status == '000001') {
             $data = array_merge($data, [
-                'transaction_id'  => $response->id
+                'transaction_id' => $response->id
             ]);
         }
 
@@ -138,5 +138,5 @@ class Airtime extends TandaClient
 
         return $payment;
     }
-	
+
 }
