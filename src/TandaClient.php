@@ -48,7 +48,7 @@ class TandaClient
      */
     protected array $base_url = [
         'uat' => 'https://tandaio-api-uats.tanda.co.ke',
-        'live' => 'https://io-proxy-443.tanda.co.ke'
+        'live' => 'https://api-v2.tanda.africa'
     ];
 
     /**
