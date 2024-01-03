@@ -75,7 +75,7 @@ class Airtime extends TandaClient
             'service_provider_id' => $serviceProviderId
         ], $customFieldsKeyValue));
         $parameters = [
-            "commandId" => "TopupFlexi",
+            "commandId" => "MerchantTopupFlexi",
             "serviceProviderId" => $serviceProviderId,
             "requestParameters" => [
                 [
