@@ -86,7 +86,7 @@ class Airtime extends TandaClient
                 [
                     "id" => "amount",
                     "value" => $amount,
-                    "label" => "Amountt"
+                    "label" => "Amount"
                 ],
                 [
                     "id" => "accountNumber",
