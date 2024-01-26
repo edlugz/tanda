@@ -32,6 +32,7 @@ class B2B extends TandaClient
 
     /**
      * B2B constructor.
+     * @throws TandaRequestException
      */
     public function __construct()
     {
@@ -41,7 +42,7 @@ class B2B extends TandaClient
 		
 		$this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
 		
-		$this->resultUrl = config('tanda.result_url');;
+		$this->resultUrl = config('tanda.result_url');
 
 		
     }
@@ -53,7 +54,7 @@ class B2B extends TandaClient
      * @param string $till
      * @param string $contact
      * @param array $customFieldsKeyValue
-     * @return \EdLugz\Tanda\Models\TandaTransaction
+     * @return TandaTransaction
      */
     public function buygoods(
 		string $merchantWallet, 
@@ -154,7 +155,7 @@ class B2B extends TandaClient
      * @param string $accountNumber
      * @param string $contact
      * @param array $customFieldsKeyValue
-     * @return \EdLugz\Tanda\Models\TandaTransaction
+     * @return TandaTransaction
      */
     public function paybill(
 		string $merchantWallet, 
