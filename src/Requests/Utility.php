@@ -76,7 +76,7 @@ class Utility extends TandaClient
         ], $customFieldsKeyValue));
 
         $parameters = [
-            "commandId" => "BillPay",
+            "commandId" => "MerchantBillPay",
             "serviceProviderId" => $serviceProviderId,
             "requestParameters" => [
                 [
@@ -146,6 +146,7 @@ class Utility extends TandaClient
      * @return TandaTransaction
      */
     public function prepaid(
+        string $merchantWallet,
         string $amount,
         string $accountNumber,
         string $contact,
@@ -159,16 +160,21 @@ class Utility extends TandaClient
         $payment = TandaTransaction::create(array_merge([
             'payment_reference' => $reference,
             'service_provider' => 'KPLC-PREPAID',
-            //'merchant_wallet' => $merchantWallet, - check on validity of this in this transaction
+            'merchant_wallet' => $merchantWallet,
             'amount' => $amount,
             'account_number' => $accountNumber,
             'service_provider_id' => 'KPLC'
         ], $customFieldsKeyValue));
 
         $parameters = [
-            "commandId" => "VoucherFlexi",
+            "commandId" => "MerchantVoucherFlexi",
             "serviceProviderId" => "KPLC",
             "requestParameters" => [
+                [
+                    "id" => "merchantWallet",
+                    "label" => "merchant wallet",
+                    "value" => $merchantWallet,
+                ],
                 [
                     "id" => "accountNumber",
                     "label" => "Account",
@@ -235,6 +241,7 @@ class Utility extends TandaClient
     /**
      * Pay for subscription TV
      *
+     * @param $merchantWallet
      * @param $serviceProviderId - GOTV / ZUKU / STARTIMES / DSTV
      * @param $amount
      * @param $accountNumber
@@ -242,6 +249,7 @@ class Utility extends TandaClient
      * @return \EdLugz\Tanda\Models\TandaTransaction
      */
     public function tv(
+        $merchantWallet,
         $serviceProviderId,
         $amount,
         $accountNumber,
@@ -255,16 +263,21 @@ class Utility extends TandaClient
         $payment = TandaTransaction::create(array_merge([
             'payment_reference' => $reference,
             'service_provider' => $serviceProviderId,
-            //'merchant_wallet' => $merchantWallet, - check on validity of this in this transaction
+            'merchant_wallet' => $merchantWallet,
             'amount' => $amount,
             'account_number' => $accountNumber,
             'service_provider_id' => $serviceProviderId
         ], $customFieldsKeyValue));
 
         $parameters = [
-            "commandId" => "TopupFix",
+            "commandId" => "MerchantTopupFix",
             "serviceProviderId" => $serviceProviderId,
             "requestParameters" => [
+                [
+                    "id" => "merchantWallet",
+                    "label" => "wallet",
+                    "value" => $merchantWallet
+                ],
                 [
                     "id" => "accountNumber",
                     "label" => "Account",
