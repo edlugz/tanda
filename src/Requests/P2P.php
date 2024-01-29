@@ -61,6 +61,36 @@ class P2P extends TandaClient
 	): TandaTransaction {
 		
 		$reference = (string) Str::ulid();
+
+        $parameters = [
+            "commandId" => "MerchantToMerchantPayment",
+            "serviceProviderId" => "TANDA",
+            "requestParameters" =>  [
+                [
+                    "id" => "merchantWallet",
+                    "label" => "merchantWallet",
+                    "value" => $senderWallet
+                ],
+                [
+                    "id" => "amount",
+                    "label" => "amount",
+                    "value" => $amount,
+                ],
+                [
+                    "id" => "destMerchantWallet",
+                    "label" => "destMerchantWallet",
+                    "value" => $receiverWallet
+                ]
+            ],
+            "referenceParameters" => [
+                [
+                    "id" => "resultUrl",
+                    "lable" => "resultUrl",
+                    "value" =>  $this->resultUrl
+                ]
+            ],
+            "reference" => $reference
+        ];
 		
 		/** @var TandaTransaction $payment */
         $payment = TandaTransaction::create(array_merge([
@@ -68,40 +98,9 @@ class P2P extends TandaClient
             'service_provider' => 'TANDA',
             'merchant_wallet' => $senderWallet,
             'amount' => $amount,
-            'account_number' => $receiverWallet
+            'account_number' => $receiverWallet,
+            'json_request' => json_encode($parameters)
         ], $customFieldsKeyValue));
-		
-        $parameters = [
-			"commandId" => "MerchantToMerchantPayment",
-			"serviceProviderId" => "TANDA",
-			"requestParameters" =>  [
-				[
-					"id" => "merchantWallet",
-					"label" => "merchantWallet",
-					"value" => $senderWallet
-				],
-				[
-					"id" => "amount",
-					"label" => "amount",
-					"value" => $amount,
-				],
-				[
-					"id" => "destMerchantWallet",
-					"label" => "destMerchantWallet",
-					"value" => $receiverWallet
-				]
-			],
-			"referenceParameters" => [
-				[
-					"id" => "resultUrl",
-					"lable" => "resultUrl",
-					"value" =>  $this->resultUrl
-				]
-			],
-			"reference" => $reference
-        ];
-		
-		$payment->update(['json_request' => json_encode($parameters)]);
         
 		try {
 			$response = $this->call($this->endPoint, ['json' => $parameters], 'POST');

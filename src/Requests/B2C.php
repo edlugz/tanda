@@ -32,6 +32,7 @@ class B2C extends TandaClient
 
     /**
      * B2C constructor.
+     * @throws TandaRequestException
      */
     public function __construct()
     {
@@ -53,7 +54,7 @@ class B2C extends TandaClient
      * @param string $accountNumber
      * @param string $narration
      * @param array $customFieldsKeyValue
-     * @return \EdLugz\Tanda\Models\TandaTransaction
+     * @return TandaTransaction
      */
     public function bank(
 		string $merchantWallet, 
@@ -64,17 +65,7 @@ class B2C extends TandaClient
 		array $customFieldsKeyValue = []
 	): TandaTransaction {
 		$reference = (string) Str::ulid();
-		
-		/** @var TandaTransaction $payment */
-        $payment = TandaTransaction::create(array_merge([
-            'payment_reference' => $reference,
-            'service_provider' => 'PESALINK',
-            'merchant_wallet' => $merchantWallet,
-            'amount' => $amount,
-            'account_number' => $accountNumber,
-            'service_provider_id' => $bankCode
-        ], $customFieldsKeyValue));
-		
+
         $parameters = [
 			"commandId" => "MerchantToBankPayment",
 			"serviceProviderId" => "PESALINK",
@@ -114,8 +105,17 @@ class B2C extends TandaClient
 			],
 			"reference" => $reference
         ];
-		
-		$payment->update(['json_request' => json_encode($parameters)]);
+
+        /** @var TandaTransaction $payment */
+        $payment = TandaTransaction::create(array_merge([
+            'payment_reference' => $reference,
+            'service_provider' => 'PESALINK',
+            'merchant_wallet' => $merchantWallet,
+            'amount' => $amount,
+            'account_number' => $accountNumber,
+            'service_provider_id' => $bankCode,
+            'json_request' => json_encode($parameters)
+        ], $customFieldsKeyValue));
 		
 		try {
 			$response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
@@ -159,7 +159,7 @@ class B2C extends TandaClient
      * @param string $amount
      * @param string $mobileNumber
      * @param array $customFieldsKeyValue
-     * @return \EdLugz\Tanda\Models\TandaTransaction
+     * @return TandaTransaction
      */
     public function mobile(
 		string $merchantWallet, 

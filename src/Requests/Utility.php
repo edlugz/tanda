@@ -65,16 +65,6 @@ class Utility extends TandaClient
 
         $reference = (string)Str::ulid();
 
-        /** @var TandaTransaction $payment */
-        $payment = TandaTransaction::create(array_merge([
-            'payment_reference' => $reference,
-            'service_provider' => $serviceProviderId,
-            //'merchant_wallet' => $merchantWallet, - check on validity of this in this transaction
-            'amount' => $amount,
-            'account_number' => $accountNumber,
-            'service_provider_id' => $serviceProviderId,
-        ], $customFieldsKeyValue));
-
         $parameters = [
             "commandId" => "MerchantBillPay",
             "serviceProviderId" => $serviceProviderId,
@@ -100,8 +90,19 @@ class Utility extends TandaClient
             ],
             "reference" => $reference
         ];
+
+        /** @var TandaTransaction $payment */
+        $payment = TandaTransaction::create(array_merge([
+            'payment_reference' => $reference,
+            'service_provider' => $serviceProviderId,
+            //'merchant_wallet' => $merchantWallet, - check on validity of this in this transaction
+            'amount' => $amount,
+            'account_number' => $accountNumber,
+            'service_provider_id' => $serviceProviderId,
+            'json_request' => json_encode($parameters)
+        ], $customFieldsKeyValue));
 		
-		$payment->update(['json_request' => json_encode($parameters)]);
+		$payment->update([]);
 
         try {
             $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
@@ -158,16 +159,6 @@ class Utility extends TandaClient
 
         $reference = (string)Str::ulid();
 
-        /** @var TandaTransaction $payment */
-        $payment = TandaTransaction::create(array_merge([
-            'payment_reference' => $reference,
-            'service_provider' => 'KPLC-PREPAID',
-            'merchant_wallet' => $merchantWallet,
-            'amount' => $amount,
-            'account_number' => $accountNumber,
-            'service_provider_id' => 'KPLC'
-        ], $customFieldsKeyValue));
-
         $parameters = [
             "commandId" => "MerchantVoucherFlexi",
             "serviceProviderId" => "KPLC",
@@ -203,8 +194,17 @@ class Utility extends TandaClient
             ],
             "reference" => $reference
         ];
-		
-		$payment->update(['json_request' => json_encode($parameters)]);
+
+        /** @var TandaTransaction $payment */
+        $payment = TandaTransaction::create(array_merge([
+            'payment_reference' => $reference,
+            'service_provider' => 'KPLC-PREPAID',
+            'merchant_wallet' => $merchantWallet,
+            'amount' => $amount,
+            'account_number' => $accountNumber,
+            'service_provider_id' => 'KPLC',
+            'json_request' => json_encode($parameters)
+        ], $customFieldsKeyValue));
 
         try {
             $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
@@ -262,16 +262,6 @@ class Utility extends TandaClient
 
         $reference = (string)Str::ulid();
 
-        /** @var TandaTransaction $payment */
-        $payment = TandaTransaction::create(array_merge([
-            'payment_reference' => $reference,
-            'service_provider' => $serviceProviderId,
-            'merchant_wallet' => $merchantWallet,
-            'amount' => $amount,
-            'account_number' => $accountNumber,
-            'service_provider_id' => $serviceProviderId
-        ], $customFieldsKeyValue));
-
         $parameters = [
             "commandId" => "MerchantTopupFix",
             "serviceProviderId" => $serviceProviderId,
@@ -302,9 +292,18 @@ class Utility extends TandaClient
             ],
             "reference" => $reference
         ];
-		
-		$payment->update(['json_request' => json_encode($parameters)]);
-		
+
+        /** @var TandaTransaction $payment */
+        $payment = TandaTransaction::create(array_merge([
+            'payment_reference' => $reference,
+            'service_provider' => $serviceProviderId,
+            'merchant_wallet' => $merchantWallet,
+            'amount' => $amount,
+            'account_number' => $accountNumber,
+            'service_provider_id' => $serviceProviderId,
+            'json_request' => json_encode($parameters)
+        ], $customFieldsKeyValue));
+
         try {
             $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
 

@@ -168,18 +168,7 @@ class B2B extends TandaClient
 	): TandaTransaction {
 		
 		$reference = (string) Str::ulid();
-		
-		/** @var TandaTransaction $payment */
-        $payment = TandaTransaction::create(array_merge([
-            'payment_reference' => $reference,
-            'service_provider' => 'MPESA',
-            'merchant_wallet' => $merchantWallet,
-            'amount' => $amount,
-            'service_provider_id' => $paybill,
-            'account_number' => $accountNumber,
-            'contact' => $contact,
-        ], $customFieldsKeyValue));
-		
+
         $parameters = [
 			"commandId" => "MerchantBillPay",
 			"serviceProviderId" => "MPESA",
@@ -219,10 +208,20 @@ class B2B extends TandaClient
 			],
 			"reference" => $reference
         ];
-		
-		$payment->update(['json_request' => json_encode($parameters)]);
-       
-		try {
+
+        /** @var TandaTransaction $payment */
+        $payment = TandaTransaction::create(array_merge([
+            'payment_reference' => $reference,
+            'service_provider' => 'MPESA',
+            'merchant_wallet' => $merchantWallet,
+            'amount' => $amount,
+            'service_provider_id' => $paybill,
+            'account_number' => $accountNumber,
+            'contact' => $contact,
+            'json_request' => json_encode($parameters)
+        ], $customFieldsKeyValue));
+
+        try {
 			$response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
 			
 			$payment->update(

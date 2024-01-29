@@ -65,16 +65,6 @@ class Airtime extends TandaClient
 
         $reference = (string)Str::ulid();
 
-        /** @var TandaTransaction $payment */
-        $payment = TandaTransaction::create(array_merge([
-            'payment_reference' => $reference,
-            'service_provider' => 'AIRTIME',
-            'merchant_wallet' => $merchantWallet,
-            'amount' => $amount,
-            'account_number' => $mobileNumber,
-            'service_provider_id' => $serviceProviderId,
-        ], $customFieldsKeyValue));
-		
         $parameters = [
             "commandId" => "MerchantTopupFlexi",
             "serviceProviderId" => $serviceProviderId,
@@ -104,8 +94,17 @@ class Airtime extends TandaClient
             ],
             "reference" => $reference
         ];
-		
-		$payment->update(['json_request' => json_encode($parameters)]);
+
+        /** @var TandaTransaction $payment */
+        $payment = TandaTransaction::create(array_merge([
+            'payment_reference' => $reference,
+            'service_provider' => 'AIRTIME',
+            'merchant_wallet' => $merchantWallet,
+            'amount' => $amount,
+            'account_number' => $mobileNumber,
+            'service_provider_id' => $serviceProviderId,
+            'json_request' => json_encode($parameters)
+        ], $customFieldsKeyValue));
 
         try {
             $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
