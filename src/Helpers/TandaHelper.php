@@ -147,4 +147,30 @@ class TandaHelper
 
         return $funding;
     }
+
+
+    /**
+     * Process ipn results.
+     *
+     * @param Request $request
+     *
+     * @return TandaFunding
+     */
+    public function ipn(Request $request): TandaFunding
+    {
+       $customer = (object) $request->input('customer');
+       $transaction = (object) $request->input('transaction');
+
+       return TandaFunding::create([
+            'fund_reference' => $customer->account,
+            'service_provider' => $transaction->channel,
+            'account_number' => null,
+            'amount' => intval($transaction->amount),
+            'transaction_id' => $transaction->id,
+            'receipt_number' => $transaction->reference,
+            'timestamp' => date('Y-m-d H:i:s', strtotime($transaction->timestamp)),
+            'transaction_reference' => $transaction->reference,
+            'json_result' => json_encode($request->all())
+        ]);
+    }
 }
