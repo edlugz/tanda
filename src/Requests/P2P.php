@@ -100,7 +100,8 @@ class P2P extends TandaClient
 			],
 			"reference" => $reference
         ];
-
+		
+		$payment->update(['json_request' => json_encode($parameters)]);
         
 		try {
 			$response = $this->call($this->endPoint, ['json' => $parameters], 'POST');

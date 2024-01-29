@@ -72,8 +72,9 @@ class Airtime extends TandaClient
             'merchant_wallet' => $merchantWallet,
             'amount' => $amount,
             'account_number' => $mobileNumber,
-            'service_provider_id' => $serviceProviderId
+            'service_provider_id' => $serviceProviderId,
         ], $customFieldsKeyValue));
+		
         $parameters = [
             "commandId" => "MerchantTopupFlexi",
             "serviceProviderId" => $serviceProviderId,
@@ -103,6 +104,8 @@ class Airtime extends TandaClient
             ],
             "reference" => $reference
         ];
+		
+		$payment->update(['json_request' => json_encode($parameters)]);
 
         try {
             $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');

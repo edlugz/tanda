@@ -100,6 +100,8 @@ class Utility extends TandaClient
             ],
             "reference" => $reference
         ];
+		
+		$payment->update(['json_request' => json_encode($parameters)]);
 
         try {
             $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
@@ -201,7 +203,8 @@ class Utility extends TandaClient
             ],
             "reference" => $reference
         ];
-
+		
+		$payment->update(['json_request' => json_encode($parameters)]);
 
         try {
             $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
@@ -299,7 +302,9 @@ class Utility extends TandaClient
             ],
             "reference" => $reference
         ];
-
+		
+		$payment->update(['json_request' => json_encode($parameters)]);
+		
         try {
             $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
 
