@@ -17,7 +17,7 @@ composer require edlugz/tanda
 ```
 
 
-## Publish Configuration File
+## Publish Migration Files
 
 ```bash
 php artisan vendor:publish --provider="EdLugz\Tanda\TandaServiceProvider" --tag="migrations"
