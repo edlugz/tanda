@@ -30,11 +30,10 @@ class Validation extends TandaClient
      *
      * @param string $mmoId - mobile money operator id (Mpesa,AirtelMoney,TKash)
      * @param string $till
-     *
-     * @return string
-     * @throws TandaRequestException
+     * @return mixed
+     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
      */
-    public function till(string $mmoId, string $till): string
+    public function till(string $mmoId, string $till): mixed
     {
         return $this->call($this->endPoint .$mmoId.'/merchants/'.$till, [], 'GET');
     }
@@ -47,7 +46,7 @@ class Validation extends TandaClient
      * @return mixed
      * @throws TandaRequestException
      */
-    public function paybill(string $mmoId, string $businessShortCode): string
+    public function paybill(string $mmoId, string $businessShortCode): mixed
     {
         return $this->call($this->endPoint .$mmoId.'/businesses/'.$businessShortCode, [], 'GET');
     }
