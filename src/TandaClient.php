@@ -53,7 +53,7 @@ class TandaClient
 
     /**
      * Make the initializations required to make calls to the Tanda APIs
-     * and throw the necessary exception if there are any missing required
+     * and throw the necessary exception if there are any missing-required
      * configurations.
      * 
      * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
@@ -66,7 +66,7 @@ class TandaClient
 
         $options = [
             'base_uri' => $this->base_url[$mode],
-            'verify' => $mode === 'uat' ? false : true,
+            'verify' => $mode !== 'uat',
         ];
 
         if (config('tanda.logs.enabled')) {
@@ -82,8 +82,8 @@ class TandaClient
     /**
      * Get access token from Tanda APIs.
      *
+     * @return void
      * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
-     * @return string
      */
     protected function getAccessToken() : void
     {

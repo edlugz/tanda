@@ -21,9 +21,10 @@ class Transaction extends TandaClient
      * @var string
      */
     protected string $orgId;
-	
-	/**
+
+    /**
      * Transaction constructor.
+     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
      */
     public function __construct()
     {

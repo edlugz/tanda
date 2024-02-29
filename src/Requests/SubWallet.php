@@ -24,6 +24,7 @@ class SubWallet extends TandaClient
 
     /**
      * SubWallet constructor.
+     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
      */
     public function __construct()
     {

@@ -32,6 +32,7 @@ class C2B extends TandaClient
 
     /**
      * C2B constructor.
+     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
      */
     public function __construct()
     {

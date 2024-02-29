@@ -48,10 +48,10 @@ class Utility extends TandaClient
     /**
      * Pay for Electricity or Water
      *
-     * @param string serviceProviderId - KPLC POSTPAID / NAIROBI_WTR
-     * @param string amount
-     * @param string accountNumber
-     * @param array customFieldsKeyValue
+     * @param string $serviceProviderId serviceProviderId - KPLC POSTPAID / NAIROBI_WTR
+     * @param string $amount amount
+     * @param string $accountNumber accountNumber
+     * @param array $customFieldsKeyValue customFieldsKeyValue
      *
      * @return TandaTransaction
      */
@@ -101,8 +101,8 @@ class Utility extends TandaClient
             'service_provider_id' => $serviceProviderId,
             'json_request' => json_encode($parameters)
         ], $customFieldsKeyValue));
-		
-		$payment->update([]);
+
+        $payment->update([]);
 
         try {
             $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
@@ -142,6 +142,7 @@ class Utility extends TandaClient
     /**
      * Purchase KPLC Prepaid Tokens
      * serviceProviderId - KPLC
+     * @param string $merchantWallet
      * @param string $amount
      * @param string $accountNumber
      * @param string $contact

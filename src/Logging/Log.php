@@ -32,6 +32,7 @@ class Log
      *
      * @param $options
      * @return int
+     * @throws \Exception
      */
     public static function enable($options)
     {

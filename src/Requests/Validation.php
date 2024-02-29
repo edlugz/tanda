@@ -13,12 +13,15 @@ class Validation extends TandaClient
      * @var string
      */
     protected string $endPoint;
-	
-	/**
+
+    /**
      * Utility constructor.
+     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
      */
 	public function __construct()
-    {		
+    {
+        parent::__construct();
+
 		$this->endPoint = 'registry/v1/countries/KE/mmos/';		
     }
 

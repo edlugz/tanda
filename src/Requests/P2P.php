@@ -32,6 +32,7 @@ class P2P extends TandaClient
 
     /**
      * P2P constructor.
+     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
      */
     public function __construct()
     {
