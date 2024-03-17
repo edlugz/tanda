@@ -164,7 +164,7 @@ class TandaHelper
        return TandaFunding::create([
             'fund_reference' => $customer->account,
             'service_provider' => $transaction->channel,
-            'account_number' => null,
+            'account_number' => $customer->account,
             'amount' => intval($transaction->amount),
             'transaction_id' => $transaction->id,
             'receipt_number' => $transaction->reference,
