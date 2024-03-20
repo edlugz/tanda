@@ -181,7 +181,7 @@ class TandaHelper
      *
      * @return TandaTransaction
      */
-    public function transactionP2P(Request $request): TandaTransaction
+    public function p2p(Request $request): TandaTransaction
     {
         $transaction = TandaTransaction::where('payment_reference', $request->input('reference'))->first();
 		
@@ -215,90 +215,5 @@ class TandaHelper
         return $transaction;
         
     }
-
-	/**
-     * Process sms p2p results.
-     *
-     * @param Request $request
-     *
-     * @return TandaTransaction
-     */
-    public function smsP2P(Request $request): TandaTransaction
-    {
-        $transaction = TandaTransaction::where('payment_reference', $request->input('reference'))->first();
-		
-		$transaction->update(
-			[
-				'json_result' => json_encode($request->all())
-			]
-		);
-		
-		if($request->input('status') == '000000'){
-			
-			$transactionReceipt = $request->input('receiptNumber');
-						
-			$data = [
-				'request_status' => $request->input('status'),
-				'request_message' => $request->input('message'),
-				'receipt_number' => $request->input('receiptNumber'),
-				'transaction_receipt' => $transactionReceipt,
-				'timestamp' => $request->input('timestamp'),
-			];
-		} else {
-			$data = [
-				'request_status' => $request->input('status'),
-				'request_message' => $request->input('message'),
-				'timestamp' => $request->input('timestamp'),
-			];
-		}
-		
-        $transaction->update($data);
-
-        return $transaction;
-        
-    }
-
-	/**
-     * Process airtime p2p results.
-     *
-     * @param Request $request
-     *
-     * @return TandaTransaction
-     */
-    public function airtimeP2P(Request $request): TandaTransaction
-    {
-        $transaction = TandaTransaction::where('payment_reference', $request->input('reference'))->first();
-		
-		$transaction->update(
-			[
-				'json_result' => json_encode($request->all())
-			]
-		);
-		
-		if($request->input('status') == '000000'){
-			
-			$transactionReceipt = $request->input('receiptNumber');
-						
-			$data = [
-				'request_status' => $request->input('status'),
-				'request_message' => $request->input('message'),
-				'receipt_number' => $request->input('receiptNumber'),
-				'transaction_receipt' => $transactionReceipt,
-				'timestamp' => $request->input('timestamp'),
-			];
-		} else {
-			$data = [
-				'request_status' => $request->input('status'),
-				'request_message' => $request->input('message'),
-				'timestamp' => $request->input('timestamp'),
-			];
-		}
-		
-        $transaction->update($data);
-
-        return $transaction;
-        
-    }
-
 
 }
