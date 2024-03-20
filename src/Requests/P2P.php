@@ -52,16 +52,20 @@ class P2P extends TandaClient
      * @param string $receiverWallet
      * @param string $amount
      * @param array $customFieldsKeyValue
+     * @param string $resultUrl
      * @return \EdLugz\Tanda\Models\TandaTransaction
      */
     public function send(
 		string $senderWallet, 
 		string $receiverWallet, 
 		string $amount,
-		array $customFieldsKeyValue = []
+		array $customFieldsKeyValue = [],
+		string $resultUrl = null
 	): TandaTransaction {
 		
 		$reference = (string) Str::ulid();
+		
+		if($resultUrl)	$this->resultUrl = $resultUrl;
 
         $parameters = [
             "commandId" => "MerchantToMerchantPayment",
