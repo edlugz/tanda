@@ -66,6 +66,8 @@ class TandaHelper
 		if($request->input('status') == '000000'){
 			
 			$transactionReceipt = $request->input('receiptNumber');
+
+            $registeredName = 'N/A';
 			
 			if($request->input('resultParameters')){
 				$params = $request->input('resultParameters');
@@ -75,6 +77,7 @@ class TandaHelper
 				}
 
 				$transactionReceipt = $keyValueParams['transactionRef'];
+				$registeredName = $keyValueParams['accountName'];
 			}
 			
 			$data = [
@@ -82,6 +85,7 @@ class TandaHelper
 				'request_message' => $request->input('message'),
 				'receipt_number' => $request->input('receiptNumber'),
 				'transaction_receipt' => $transactionReceipt,
+				'registered_name' => $registeredName,
 				'timestamp' => $request->input('timestamp'),
 			];
 		} else {
