@@ -163,6 +163,9 @@ class TandaClient
         } catch (ClientException $e) {			
 			$response = json_decode($e->getResponse()->getBody()->getContents());			
             throw new TandaRequestException('Tanda APIs: '.$response->status, $e->getCode());
+        } catch (ConnectException $e) { 
+            // Handle 504 Gateway Timeout
+            throw new TandaRequestException('Tanda APIs: Gateway Timeout', 504);
         } catch (GuzzleException $e) {
             throw new TandaRequestException('Tanda APIs: '.$e->getMessage(), $e->getCode());
         }
