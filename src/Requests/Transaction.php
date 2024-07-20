@@ -25,7 +25,7 @@ class Transaction extends TandaClient
 
     /**
      * Transaction constructor.
-     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
+     * @throws TandaRequestException
      */
     public function __construct()
     {
@@ -57,7 +57,7 @@ class Transaction extends TandaClient
         if($transaction)
             try {
                 
-                $response = $this->call($this->endPoint.''.$reference.'', [], 'GET');
+                $response = $this->call($this->endPoint .$reference, [], 'GET');
                 
             } catch(TandaRequestException $e){
                 $response = [
