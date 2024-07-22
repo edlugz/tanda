@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Support\Facades\Route;
 use EdLugz\Tanda\Exceptions\TandaRequestException;
 use EdLugz\Tanda\Logging\Log;
