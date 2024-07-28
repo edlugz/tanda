@@ -40,76 +40,96 @@ class Transaction extends TandaClient
     /**
      * Transaction status query
 	 *
-	 * @param string $transactionType
 	 * @param string $reference
 	 *
-	 * @return TandaTransaction | TandaFunding
-     *@throws  TandaRequestException
-	 *
+	 * @return array
+     *
 	 */
-    public function status(string $transactionType, string $reference) : TandaTransaction|TandaFunding  
+    private function status(string $reference) : array
     {
-        if($transactionType === 'funding'){
-            $transaction = TandaFunding::where('transaction_id', $reference)->first();
-        } else {
-		    $transaction = TandaTransaction::where('payment_reference', $reference)->first();
-        }
-        if($transaction)
-            try {
-                
-                $response = $this->call($this->endPoint .$reference, [], 'GET');
-                
-            } catch(TandaRequestException $e){
-                $response = [
-                    'status'         => $e->getCode(),
-                    'responseCode'   => $e->getCode(),
-                    'message'        => $e->getMessage(),
-                ];
+        try {
 
-                $response = (object) $response;
-            }
-            
-            $data = [
-                'request_status'      => $response->status,
-                'request_message'       => $response->message,
+            $response = $this->call($this->endPoint . $reference, [], 'GET');
+
+        } catch (TandaRequestException $e) {
+            $response = [
+                'status' => $e->getCode(),
+                'responseCode' => $e->getCode(),
+                'message' => $e->getMessage(),
             ];
-            
-            if($response->status == '000001'){
-            
-                $transactionReceipt = $response->receiptNumber;
-                
-                if($response->resultParameters){
-                    $params = $response->resultParameters;
-                    $keyValueParams = [];
-                    foreach ($params as $param) {
-                        $keyValueParams[$param['id']] = $param['value'];
-                    }
 
-                    $transactionReceipt = $keyValueParams['transactionRef'];
+            $response = (object)$response;
+        }
+
+        $data = [
+            'request_status' => $response->status,
+            'request_message' => $response->message,
+        ];
+
+        if ($response->status == '000000') {
+
+            $transactionReceipt = $response->receiptNumber;
+
+            if ($response->resultParameters) {
+                $params = $response->resultParameters;
+                $keyValueParams = [];
+                foreach ($params as $param) {
+                    $keyValueParams[$param['id']] = $param['value'];
                 }
-                
-                $data = array_merge($data, [
-                    'request_status' => $response->status,
-                    'request_message' => $response->message,
-                    'receipt_number' => $response->receiptNumber,
-                    'transaction_reference' => $transactionReceipt,
-                    'timestamp' => $response->timestamp,
-                ]);
 
-            } else {
-
-                $data = array_merge($data, [
-                    'request_status' => $response->status,
-                    'request_message' => $response->message,
-                    'timestamp' => $response->timestamp,
-                ]);
-
+                $transactionReceipt = $keyValueParams['transactionRef'];
             }
-            
 
-            $transaction->update($data);
+            $data = array_merge($data, [
+                'request_status' => $response->status,
+                'request_message' => $response->message,
+                'receipt_number' => $response->receiptNumber,
+                'transaction_reference' => $transactionReceipt,
+                'timestamp' => date('Y-m-d H:i:s', strtotime($response->datetimeCompleted)),
+            ]);
+
+        } else {
+
+            $data = array_merge($data, [
+                'request_status' => $response->status,
+                'request_message' => $response->message
+            ]);
+
+        }
+
+        return $data;
+    }
+
+    /**
+     * @throws TandaRequestException
+     */
+    public function fundingCheck(string $reference) : TandaFunding
+    {
+        $funding = TandaFunding::where('funding_reference', $reference)->first();
+
+        $data = $this->status($reference);
+
+        $funding->update($data);
+
+        return $funding;
+
+    }
+
+
+    /**
+     * @throws TandaRequestException
+     */
+    public function transactionCheck(string $reference) : TandaTransaction
+    {
+        $transaction = TandaTransaction::where('payment_reference', $reference)->first();
+
+        $data = $this->status($reference);
+
+        $transaction->update($data);
 
         return $transaction;
+
     }
-	
+
+
 }
