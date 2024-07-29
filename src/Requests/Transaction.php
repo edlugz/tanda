@@ -74,7 +74,7 @@ class Transaction extends TandaClient
                 $params = $response->resultParameters;
                 $keyValueParams = [];
                 foreach ($params as $param) {
-                    $keyValueParams[$param['id']] = $param['value'];
+                    $keyValueParams[$param->id] = $param->value;
                 }
 
                 $transactionReceipt = $keyValueParams['transactionRef'];
