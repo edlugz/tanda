@@ -77,7 +77,8 @@ class TandaHelper
 				}
 
 				$transactionReceipt = $keyValueParams['transactionRef'];
-				$registeredName = $keyValueParams['accountName'];
+                if(array_key_exists('accountName', $keyValueParams))
+				    $registeredName = $keyValueParams['accountName'];
 			}
 			
 			$data = [
