@@ -2,21 +2,21 @@
 
 namespace EdLugz\Tanda\Requests;
 
-use EdLugz\Tanda\Models\TandaTransaction;
-use EdLugz\Tanda\Models\TandaFunding;
 use EdLugz\Tanda\Exceptions\TandaRequestException;
+use EdLugz\Tanda\Models\TandaFunding;
+use EdLugz\Tanda\Models\TandaTransaction;
 use EdLugz\Tanda\TandaClient;
 
 class Transaction extends TandaClient
 {
-	/**
+    /**
      * Check transaction status end point on Tanda API.
      *
      * @var string
      */
     protected string $endPoint;
-	
-	/**
+
+    /**
      * The organisation ID assigned for the application on Tanda API.
      *
      * @var string
@@ -25,49 +25,45 @@ class Transaction extends TandaClient
 
     /**
      * Transaction constructor.
+     *
      * @throws TandaRequestException
      */
     public function __construct()
     {
         parent::__construct();
-		
-        $this->orgId = config('tanda.organisation_id'); 
-		
-		$this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests/';
-		
+
+        $this->orgId = config('tanda.organisation_id');
+
+        $this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests/';
     }
-	
+
     /**
-     * Transaction status query
-	 *
-	 * @param string $reference
-	 *
-	 * @return array
+     * Transaction status query.
      *
-	 */
-    private function status(string $reference) : array
+     * @param string $reference
+     *
+     * @return array
+     */
+    private function status(string $reference): array
     {
         try {
-
-            $response = $this->call($this->endPoint . $reference, [], 'GET');
-
+            $response = $this->call($this->endPoint.$reference, [], 'GET');
         } catch (TandaRequestException $e) {
             $response = [
-                'status' => $e->getCode(),
+                'status'       => $e->getCode(),
                 'responseCode' => $e->getCode(),
-                'message' => $e->getMessage(),
+                'message'      => $e->getMessage(),
             ];
 
-            $response = (object)$response;
+            $response = (object) $response;
         }
 
         $data = [
-            'request_status' => $response->status,
+            'request_status'  => $response->status,
             'request_message' => $response->message,
         ];
 
         if ($response->status == '000000') {
-
             $transactionReceipt = $response->receiptNumber;
 
             if ($response->resultParameters) {
@@ -81,20 +77,17 @@ class Transaction extends TandaClient
             }
 
             $data = array_merge($data, [
-                'request_status' => $response->status,
-                'request_message' => $response->message,
-                'receipt_number' => $response->receiptNumber,
+                'request_status'        => $response->status,
+                'request_message'       => $response->message,
+                'receipt_number'        => $response->receiptNumber,
                 'transaction_reference' => $transactionReceipt,
-                'timestamp' => date('Y-m-d H:i:s', strtotime($response->datetimeCompleted)),
+                'timestamp'             => date('Y-m-d H:i:s', strtotime($response->datetimeCompleted)),
             ]);
-
         } else {
-
             $data = array_merge($data, [
-                'request_status' => $response->status,
-                'request_message' => $response->message
+                'request_status'  => $response->status,
+                'request_message' => $response->message,
             ]);
-
         }
 
         return $data;
@@ -103,7 +96,7 @@ class Transaction extends TandaClient
     /**
      * @throws TandaRequestException
      */
-    public function fundingCheck(string $reference) : TandaFunding
+    public function fundingCheck(string $reference): TandaFunding
     {
         $funding = TandaFunding::where('funding_reference', $reference)->first();
 
@@ -112,14 +105,12 @@ class Transaction extends TandaClient
         $funding->update($data);
 
         return $funding;
-
     }
-
 
     /**
      * @throws TandaRequestException
      */
-    public function transactionCheck(string $reference) : TandaTransaction
+    public function transactionCheck(string $reference): TandaTransaction
     {
         $transaction = TandaTransaction::where('payment_reference', $reference)->first();
 
@@ -128,8 +119,5 @@ class Transaction extends TandaClient
         $transaction->update($data);
 
         return $transaction;
-
     }
-
-
 }

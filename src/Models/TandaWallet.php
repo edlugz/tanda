@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TandaWallet extends Model
 {
-	use SoftDeletes;
-	
-	protected $guarded = [];
+    use SoftDeletes;
+
+    protected $guarded = [];
 }

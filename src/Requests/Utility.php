@@ -39,19 +39,18 @@ class Utility extends TandaClient
 
         $this->orgId = config('tanda.organisation_id');
 
-        $this->endPoint = 'io/v2/organizations/' . $this->orgId . '/requests';
+        $this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
 
         $this->resultUrl = config('tanda.result_url');
-
     }
 
     /**
-     * Pay for Electricity or Water
+     * Pay for Electricity or Water.
      *
-     * @param string $serviceProviderId serviceProviderId - KPLC POSTPAID / NAIROBI_WTR
-     * @param string $amount amount
-     * @param string $accountNumber accountNumber
-     * @param array $customFieldsKeyValue customFieldsKeyValue
+     * @param string $serviceProviderId    serviceProviderId - KPLC POSTPAID / NAIROBI_WTR
+     * @param string $amount               amount
+     * @param string $accountNumber        accountNumber
+     * @param array  $customFieldsKeyValue customFieldsKeyValue
      *
      * @return TandaTransaction
      */
@@ -59,47 +58,45 @@ class Utility extends TandaClient
         string $serviceProviderId,
         string $amount,
         string $accountNumber,
-        array  $customFieldsKeyValue = []
-    ): TandaTransaction
-    {
-
-        $reference = (string)Str::ulid();
+        array $customFieldsKeyValue = []
+    ): TandaTransaction {
+        $reference = (string) Str::ulid();
 
         $parameters = [
-            "commandId" => "MerchantBillPay",
-            "serviceProviderId" => $serviceProviderId,
-            "requestParameters" => [
+            'commandId'         => 'MerchantBillPay',
+            'serviceProviderId' => $serviceProviderId,
+            'requestParameters' => [
                 [
-                    "id" => "accountNumber",
-                    "label" => "Account",
-                    "value" => $accountNumber,
+                    'id'    => 'accountNumber',
+                    'label' => 'Account',
+                    'value' => $accountNumber,
                 ],
                 [
-                    "id" => "amount",
-                    "label" => "Amount",
-                    "value" => $amount,
-                ]
+                    'id'    => 'amount',
+                    'label' => 'Amount',
+                    'value' => $amount,
+                ],
             ],
-            "referenceParameters" => [
+            'referenceParameters' => [
                 [
-                    "id" => "resultUrl",
-                    "label" => "Callback",
-                    "value" => $this->resultUrl
-                ]
+                    'id'    => 'resultUrl',
+                    'label' => 'Callback',
+                    'value' => $this->resultUrl,
+                ],
 
             ],
-            "reference" => $reference
+            'reference' => $reference,
         ];
 
         /** @var TandaTransaction $payment */
         $payment = TandaTransaction::create(array_merge([
             'payment_reference' => $reference,
-            'service_provider' => $serviceProviderId,
+            'service_provider'  => $serviceProviderId,
             //'merchant_wallet' => $merchantWallet, - check on validity of this in this transaction
-            'amount' => $amount,
-            'account_number' => $accountNumber,
+            'amount'              => $amount,
+            'account_number'      => $accountNumber,
             'service_provider_id' => $serviceProviderId,
-            'json_request' => json_encode($parameters)
+            'json_request'        => json_encode($parameters),
         ], $customFieldsKeyValue));
 
         $payment->update([]);
@@ -109,28 +106,27 @@ class Utility extends TandaClient
 
             $payment->update(
                 [
-                    'json_response' => json_encode($response)
+                    'json_response' => json_encode($response),
                 ]
             );
-
         } catch (TandaRequestException $e) {
             $response = [
-                'status' => $e->getCode(),
+                'status'       => $e->getCode(),
                 'responseCode' => $e->getCode(),
-                'message' => $e->getMessage(),
+                'message'      => $e->getMessage(),
             ];
 
-            $response = (object)$response;
+            $response = (object) $response;
         }
 
         $data = [
-            'response_status' => $response->status,
+            'response_status'  => $response->status,
             'response_message' => $response->message,
         ];
 
         if ($response->status == '000001') {
             $data = array_merge($data, [
-                'transaction_id' => $response->id
+                'transaction_id' => $response->id,
             ]);
         }
 
@@ -141,12 +137,14 @@ class Utility extends TandaClient
 
     /**
      * Purchase KPLC Prepaid Tokens
-     * serviceProviderId - KPLC
+     * serviceProviderId - KPLC.
+     *
      * @param string $merchantWallet
      * @param string $amount
      * @param string $accountNumber
      * @param string $contact
-     * @param array $customFieldsKeyValue
+     * @param array  $customFieldsKeyValue
+     *
      * @return TandaTransaction
      */
     public function prepaid(
@@ -154,57 +152,55 @@ class Utility extends TandaClient
         string $amount,
         string $accountNumber,
         string $contact,
-        array  $customFieldsKeyValue = []
-    ): TandaTransaction
-    {
-
-        $reference = (string)Str::ulid();
+        array $customFieldsKeyValue = []
+    ): TandaTransaction {
+        $reference = (string) Str::ulid();
 
         $parameters = [
-            "commandId" => "MerchantVoucherFlexi",
-            "serviceProviderId" => "KPLC",
-            "requestParameters" => [
+            'commandId'         => 'MerchantVoucherFlexi',
+            'serviceProviderId' => 'KPLC',
+            'requestParameters' => [
                 [
-                    "id" => "merchantWallet",
-                    "label" => "merchant wallet",
-                    "value" => $merchantWallet,
+                    'id'    => 'merchantWallet',
+                    'label' => 'merchant wallet',
+                    'value' => $merchantWallet,
                 ],
                 [
-                    "id" => "accountNumber",
-                    "label" => "Account",
-                    "value" => $accountNumber,
+                    'id'    => 'accountNumber',
+                    'label' => 'Account',
+                    'value' => $accountNumber,
                 ],
                 [
-                    "id" => "customerContact",
-                    "label" => "Contact",
-                    "value" => $contact,
+                    'id'    => 'customerContact',
+                    'label' => 'Contact',
+                    'value' => $contact,
                 ],
                 [
-                    "id" => "amount",
-                    "label" => "Amount",
-                    "value" => $amount,
-                ]
+                    'id'    => 'amount',
+                    'label' => 'Amount',
+                    'value' => $amount,
+                ],
             ],
-            "referenceParameters" => [
+            'referenceParameters' => [
                 [
-                    "id" => "resultUrl",
-                    "label" => "Callback",
-                    "value" => $this->resultUrl
-                ]
+                    'id'    => 'resultUrl',
+                    'label' => 'Callback',
+                    'value' => $this->resultUrl,
+                ],
 
             ],
-            "reference" => $reference
+            'reference' => $reference,
         ];
 
         /** @var TandaTransaction $payment */
         $payment = TandaTransaction::create(array_merge([
-            'payment_reference' => $reference,
-            'service_provider' => 'KPLC-PREPAID',
-            'merchant_wallet' => $merchantWallet,
-            'amount' => $amount,
-            'account_number' => $accountNumber,
+            'payment_reference'   => $reference,
+            'service_provider'    => 'KPLC-PREPAID',
+            'merchant_wallet'     => $merchantWallet,
+            'amount'              => $amount,
+            'account_number'      => $accountNumber,
             'service_provider_id' => 'KPLC',
-            'json_request' => json_encode($parameters)
+            'json_request'        => json_encode($parameters),
         ], $customFieldsKeyValue));
 
         try {
@@ -212,28 +208,27 @@ class Utility extends TandaClient
 
             $payment->update(
                 [
-                    'json_response' => json_encode($response)
+                    'json_response' => json_encode($response),
                 ]
             );
-
         } catch (TandaRequestException $e) {
             $response = [
-                'status' => $e->getCode(),
+                'status'       => $e->getCode(),
                 'responseCode' => $e->getCode(),
-                'message' => $e->getMessage(),
+                'message'      => $e->getMessage(),
             ];
 
-            $response = (object)$response;
+            $response = (object) $response;
         }
 
         $data = [
-            'response_status' => $response->status,
+            'response_status'  => $response->status,
             'response_message' => $response->message,
         ];
 
         if ($response->status == '000001') {
             $data = array_merge($data, [
-                'transaction_id' => $response->id
+                'transaction_id' => $response->id,
             ]);
         }
 
@@ -243,13 +238,14 @@ class Utility extends TandaClient
     }
 
     /**
-     * Pay for subscription TV
+     * Pay for subscription TV.
      *
-     * @param $merchantWallet
-     * @param $serviceProviderId - GOTV / ZUKU / STARTIMES / DSTV
-     * @param $amount
-     * @param $accountNumber
+     * @param       $merchantWallet
+     * @param       $serviceProviderId    - GOTV / ZUKU / STARTIMES / DSTV
+     * @param       $amount
+     * @param       $accountNumber
      * @param array $customFieldsKeyValue
+     *
      * @return \EdLugz\Tanda\Models\TandaTransaction
      */
     public function tv(
@@ -258,51 +254,49 @@ class Utility extends TandaClient
         $amount,
         $accountNumber,
         array $customFieldsKeyValue = []
-    ): TandaTransaction
-    {
-
-        $reference = (string)Str::ulid();
+    ): TandaTransaction {
+        $reference = (string) Str::ulid();
 
         $parameters = [
-            "commandId" => "MerchantTopupFix",
-            "serviceProviderId" => $serviceProviderId,
-            "requestParameters" => [
+            'commandId'         => 'MerchantTopupFix',
+            'serviceProviderId' => $serviceProviderId,
+            'requestParameters' => [
                 [
-                    "id" => "merchantWallet",
-                    "label" => "wallet",
-                    "value" => $merchantWallet
+                    'id'    => 'merchantWallet',
+                    'label' => 'wallet',
+                    'value' => $merchantWallet,
                 ],
                 [
-                    "id" => "accountNumber",
-                    "label" => "Account",
-                    "value" => $accountNumber,
+                    'id'    => 'accountNumber',
+                    'label' => 'Account',
+                    'value' => $accountNumber,
                 ],
                 [
-                    "id" => "amount",
-                    "label" => "Amount",
-                    "value" => $amount,
-                ]
+                    'id'    => 'amount',
+                    'label' => 'Amount',
+                    'value' => $amount,
+                ],
             ],
-            "referenceParameters" => [
+            'referenceParameters' => [
                 [
-                    "id" => "resultUrl",
-                    "label" => "Callback",
-                    "value" => $this->resultUrl
-                ]
+                    'id'    => 'resultUrl',
+                    'label' => 'Callback',
+                    'value' => $this->resultUrl,
+                ],
 
             ],
-            "reference" => $reference
+            'reference' => $reference,
         ];
 
         /** @var TandaTransaction $payment */
         $payment = TandaTransaction::create(array_merge([
-            'payment_reference' => $reference,
-            'service_provider' => $serviceProviderId,
-            'merchant_wallet' => $merchantWallet,
-            'amount' => $amount,
-            'account_number' => $accountNumber,
+            'payment_reference'   => $reference,
+            'service_provider'    => $serviceProviderId,
+            'merchant_wallet'     => $merchantWallet,
+            'amount'              => $amount,
+            'account_number'      => $accountNumber,
             'service_provider_id' => $serviceProviderId,
-            'json_request' => json_encode($parameters)
+            'json_request'        => json_encode($parameters),
         ], $customFieldsKeyValue));
 
         try {
@@ -310,28 +304,27 @@ class Utility extends TandaClient
 
             $payment->update(
                 [
-                    'json_response' => json_encode($response)
+                    'json_response' => json_encode($response),
                 ]
             );
-
         } catch (TandaRequestException $e) {
             $response = [
-                'status' => $e->getCode(),
+                'status'       => $e->getCode(),
                 'responseCode' => $e->getCode(),
-                'message' => $e->getMessage(),
+                'message'      => $e->getMessage(),
             ];
 
-            $response = (object)$response;
+            $response = (object) $response;
         }
 
         $data = [
-            'response_status' => $response->status,
+            'response_status'  => $response->status,
             'response_message' => $response->message,
         ];
 
         if ($response->status == '000001') {
             $data = array_merge($data, [
-                'transaction_id' => $response->id
+                'transaction_id' => $response->id,
             ]);
         }
 
@@ -339,5 +332,4 @@ class Utility extends TandaClient
 
         return $payment;
     }
-
 }
