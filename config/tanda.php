@@ -49,7 +49,7 @@ return [
     */
 
     'mode' => 'live',
-	
+
     /*
     |--------------------------------------------------------------------------
     | API Base URL
@@ -99,7 +99,7 @@ return [
 
     'logs' => [
         'enabled' => true,
-        'level' => 'DEBUG',
+        'level'   => 'DEBUG',
     ],
 
 ];

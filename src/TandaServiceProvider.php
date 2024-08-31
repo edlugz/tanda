@@ -6,11 +6,11 @@ use Illuminate\Support\ServiceProvider;
 
 class TandaServiceProvider extends ServiceProvider
 {
-	/**
+    /**
      * Package path to config.
      */
     const CONFIG_PATH = __DIR__.'/../config/tanda.php';
-	
+
     /**
      * Perform post-registration booting of services.
      *
@@ -21,11 +21,11 @@ class TandaServiceProvider extends ServiceProvider
         $this->publishes([
             self::CONFIG_PATH => config_path('tanda.php'),
         ], 'config');
-		
-		$this->publishes([
+
+        $this->publishes([
             __DIR__.'/../database/migrations/' => database_path('migrations'),
         ], 'migrations');
-		
+
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
@@ -43,7 +43,7 @@ class TandaServiceProvider extends ServiceProvider
 
         // Register the service the package provides.
         $this->app->singleton('tanda', function ($app) {
-            return new Tanda;
+            return new Tanda();
         });
     }
 

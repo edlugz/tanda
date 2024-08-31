@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class TandaFunding extends Model
 {
-	use SoftDeletes;
-	
-	protected $guarded = [];
+    use SoftDeletes;
+
+    protected $guarded = [];
 }

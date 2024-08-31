@@ -2,8 +2,8 @@
 
 namespace EdLugz\Tanda\Requests;
 
-use EdLugz\Tanda\Models\TandaTransaction;
 use EdLugz\Tanda\Exceptions\TandaRequestException;
+use EdLugz\Tanda\Models\TandaTransaction;
 use EdLugz\Tanda\TandaClient;
 use Illuminate\Support\Str;
 
@@ -32,6 +32,7 @@ class Airtime extends TandaClient
 
     /**
      * Airtime constructor.
+     *
      * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
      */
     public function __construct()
@@ -40,19 +41,20 @@ class Airtime extends TandaClient
 
         $this->orgId = config('tanda.organisation_id');
 
-        $this->endPoint = 'io/v2/organizations/' . $this->orgId . '/requests';
+        $this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
 
         $this->resultUrl = config('tanda.result_url');
-
     }
 
     /**
-     * Purchase pinless prepaid airtime
-     * @param $merchantWallet
-     * @param $serviceProviderId
-     * @param $amount
-     * @param $mobileNumber
+     * Purchase pinless prepaid airtime.
+     *
+     * @param       $merchantWallet
+     * @param       $serviceProviderId
+     * @param       $amount
+     * @param       $mobileNumber
      * @param array $customFieldsKeyValue
+     *
      * @return \EdLugz\Tanda\Models\TandaTransaction
      */
     public function prepaid(
@@ -61,50 +63,48 @@ class Airtime extends TandaClient
         $amount,
         $mobileNumber,
         array $customFieldsKeyValue = []
-    ): TandaTransaction
-    {
-
-        $reference = (string)Str::ulid();
+    ): TandaTransaction {
+        $reference = (string) Str::ulid();
 
         $parameters = [
-            "commandId" => "MerchantTopupFlexi",
-            "serviceProviderId" => $serviceProviderId,
-            "requestParameters" => [
+            'commandId'         => 'MerchantTopupFlexi',
+            'serviceProviderId' => $serviceProviderId,
+            'requestParameters' => [
                 [
-                    "id" => "merchantWallet",
-                    "label" => "wallet",
-                    "value" => $merchantWallet
+                    'id'    => 'merchantWallet',
+                    'label' => 'wallet',
+                    'value' => $merchantWallet,
                 ],
                 [
-                    "id" => "amount",
-                    "value" => $amount,
-                    "label" => "Amount"
+                    'id'    => 'amount',
+                    'value' => $amount,
+                    'label' => 'Amount',
                 ],
                 [
-                    "id" => "accountNumber",
-                    "value" => $mobileNumber,
-                    "label" => "Phone No."
-                ]
+                    'id'    => 'accountNumber',
+                    'value' => $mobileNumber,
+                    'label' => 'Phone No.',
+                ],
             ],
-            "referenceParameters" => [
+            'referenceParameters' => [
                 [
-                    "id" => "resultUrl",
-                    "value" => $this->resultUrl,
-                    "label" => "Hook"
-                ]
+                    'id'    => 'resultUrl',
+                    'value' => $this->resultUrl,
+                    'label' => 'Hook',
+                ],
             ],
-            "reference" => $reference
+            'reference' => $reference,
         ];
 
         /** @var TandaTransaction $payment */
         $payment = TandaTransaction::create(array_merge([
-            'payment_reference' => $reference,
-            'service_provider' => 'AIRTIME',
-            'merchant_wallet' => $merchantWallet,
-            'amount' => $amount,
-            'account_number' => $mobileNumber,
+            'payment_reference'   => $reference,
+            'service_provider'    => 'AIRTIME',
+            'merchant_wallet'     => $merchantWallet,
+            'amount'              => $amount,
+            'account_number'      => $mobileNumber,
             'service_provider_id' => $serviceProviderId,
-            'json_request' => json_encode($parameters)
+            'json_request'        => json_encode($parameters),
         ], $customFieldsKeyValue));
 
         try {
@@ -112,28 +112,27 @@ class Airtime extends TandaClient
 
             $payment->update(
                 [
-                    'json_response' => json_encode($response)
+                    'json_response' => json_encode($response),
                 ]
             );
-
         } catch (TandaRequestException $e) {
             $response = [
-                'status' => $e->getCode(),
+                'status'       => $e->getCode(),
                 'responseCode' => $e->getCode(),
-                'message' => $e->getMessage(),
+                'message'      => $e->getMessage(),
             ];
 
-            $response = (object)$response;
+            $response = (object) $response;
         }
 
         $data = [
-            'response_status' => $response->status,
+            'response_status'  => $response->status,
             'response_message' => $response->message,
         ];
 
         if ($response->status == '000001') {
             $data = array_merge($data, [
-                'transaction_id' => $response->id
+                'transaction_id' => $response->id,
             ]);
         }
 
@@ -141,5 +140,4 @@ class Airtime extends TandaClient
 
         return $payment;
     }
-
 }
