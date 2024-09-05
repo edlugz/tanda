@@ -50,11 +50,13 @@ class Utility extends TandaClient
      * @param string $serviceProviderId    serviceProviderId - KPLC POSTPAID / NAIROBI_WTR
      * @param string $amount               amount
      * @param string $accountNumber        accountNumber
+     * @param string $merchantWallet        merchantWallet
      * @param array  $customFieldsKeyValue customFieldsKeyValue
      *
      * @return TandaTransaction
      */
     public function postpaid(
+        string $merchantWallet,
         string $serviceProviderId,
         string $amount,
         string $accountNumber,
@@ -70,6 +72,11 @@ class Utility extends TandaClient
                     'id'    => 'accountNumber',
                     'label' => 'Account',
                     'value' => $accountNumber,
+                ],
+                [
+                    'id'    => 'merchantWallet',
+                    'label' => 'merchant',
+                    'value' => $merchantWallet,
                 ],
                 [
                     'id'    => 'amount',
@@ -92,7 +99,7 @@ class Utility extends TandaClient
         $payment = TandaTransaction::create(array_merge([
             'payment_reference' => $reference,
             'service_provider'  => $serviceProviderId,
-            //'merchant_wallet' => $merchantWallet, - check on validity of this in this transaction
+            'merchant_wallet' => $merchantWallet,
             'amount'              => $amount,
             'account_number'      => $accountNumber,
             'service_provider_id' => $serviceProviderId,
