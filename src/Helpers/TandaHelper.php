@@ -59,7 +59,9 @@ class TandaHelper
      */
     public function payout(Request $request): TandaTransaction
     {
-        $transaction = TandaTransaction::where('transaction_id', $request->input('transactionId'))->first();
+        $transaction = TandaTransaction::where('transaction_id', $request->input('transactionId'))
+                        ->whereNotNull('transaction_id')
+                        ->first();
 
         $transaction->update(
             [
