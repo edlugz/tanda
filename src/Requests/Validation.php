@@ -17,7 +17,7 @@ class Validation extends TandaClient
     /**
      * Utility constructor.
      *
-     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
+     * @throws TandaRequestException
      */
     public function __construct()
     {
@@ -32,9 +32,9 @@ class Validation extends TandaClient
      * @param string $mmoId - mobile money operator id (Mpesa,AirtelMoney,TKash)
      * @param string $till
      *
-     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
-     *
      * @return mixed
+     * @throws TandaRequestException
+     *
      */
     public function till(string $mmoId, string $till): mixed
     {

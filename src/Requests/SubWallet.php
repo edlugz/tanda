@@ -25,7 +25,7 @@ class SubWallet extends TandaClient
     /**
      * SubWallet constructor.
      *
-     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
+     * @throws TandaRequestException
      */
     public function __construct()
     {
@@ -45,7 +45,7 @@ class SubWallet extends TandaClient
      * @param string $password
      * @param array  $customFieldsKeyValue
      *
-     * @return \EdLugz\Tanda\Models\TandaWallet
+     * @return TandaWallet
      */
     public function create(
         string $name,
@@ -125,15 +125,21 @@ class SubWallet extends TandaClient
     /**
      * Update a Sub wallet.
      *
-     * @param string walletId
-     * @param string name
-     * @param string ipnUrl
-     * @param string username
-     * @param string password
+     * @param string $walletId
+     * @param string $name
+     * @param string $ipnUrl
+     * @param string $username
+     * @param string $password
      *
      * @return mixed
      */
-    public function update($walletId, $name, $ipnUrl, $username, $password): TandaWallet
+    public function update(
+        string $walletId,
+        string $name,
+        string $ipnUrl,
+        string $username,
+        string $password
+    ): TandaWallet
     {
         $wallet = TandaWallet::where('wallet_account_number', $walletId)->first();
 

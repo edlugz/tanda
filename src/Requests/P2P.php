@@ -33,7 +33,7 @@ class P2P extends TandaClient
     /**
      * P2P constructor.
      *
-     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
+     * @throws TandaRequestException
      */
     public function __construct()
     {
@@ -52,10 +52,10 @@ class P2P extends TandaClient
      * @param string $senderWallet
      * @param string $receiverWallet
      * @param string $amount
-     * @param array  $customFieldsKeyValue
-     * @param string $resultUrl
+     * @param array $customFieldsKeyValue
+     * @param string|null $resultUrl
      *
-     * @return \EdLugz\Tanda\Models\TandaTransaction
+     * @return TandaTransaction
      */
     public function send(
         string $senderWallet,

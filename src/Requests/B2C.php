@@ -3,6 +3,7 @@
 namespace EdLugz\Tanda\Requests;
 
 use EdLugz\Tanda\Exceptions\TandaRequestException;
+use EdLugz\Tanda\Helpers\TandaHelper;
 use EdLugz\Tanda\Models\TandaTransaction;
 use EdLugz\Tanda\TandaClient;
 use Illuminate\Support\Str;
@@ -35,7 +36,7 @@ class B2C extends TandaClient
      *
      * @throws TandaRequestException
      */
-    public function __construct()
+    public function __construct(string $resultUrl = null)
     {
         parent::__construct();
 
@@ -43,7 +44,7 @@ class B2C extends TandaClient
 
         $this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
 
-        $this->resultUrl = config('tanda.result_url');
+        $this->resultUrl = $resultUrl ?? TandaHelper::getPaymentResultUrl();
     }
 
     /**

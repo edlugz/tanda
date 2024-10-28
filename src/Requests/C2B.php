@@ -33,7 +33,7 @@ class C2B extends TandaClient
     /**
      * C2B constructor.
      *
-     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
+     * @throws TandaRequestException
      */
     public function __construct()
     {
@@ -55,7 +55,7 @@ class C2B extends TandaClient
      * @param string $amount
      * @param array  $customFieldsKeyValue
      *
-     * @return \EdLugz\Tanda\Models\TandaFunding
+     * @return TandaFunding
      */
     public function request(
         string $serviceProviderId,

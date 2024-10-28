@@ -3,6 +3,7 @@
 namespace EdLugz\Tanda\Requests;
 
 use EdLugz\Tanda\Exceptions\TandaRequestException;
+use EdLugz\Tanda\Helpers\TandaHelper;
 use EdLugz\Tanda\Models\TandaTransaction;
 use EdLugz\Tanda\TandaClient;
 use Illuminate\Support\Str;
@@ -33,9 +34,9 @@ class Airtime extends TandaClient
     /**
      * Airtime constructor.
      *
-     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
+     * @throws TandaRequestException
      */
-    public function __construct()
+    public function __construct(string $resultUrl = null)
     {
         parent::__construct();
 
@@ -43,7 +44,7 @@ class Airtime extends TandaClient
 
         $this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
 
-        $this->resultUrl = config('tanda.result_url');
+        $this->resultUrl = $resultUrl ?? $resultURL ?? TandaHelper::getPaymentResultUrl();
     }
 
     /**
@@ -55,7 +56,7 @@ class Airtime extends TandaClient
      * @param       $mobileNumber
      * @param array $customFieldsKeyValue
      *
-     * @return \EdLugz\Tanda\Models\TandaTransaction
+     * @return TandaTransaction
      */
     public function prepaid(
         $merchantWallet,
