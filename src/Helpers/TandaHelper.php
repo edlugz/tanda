@@ -57,7 +57,6 @@ class TandaHelper
      * @param Request $request
      *
      * @return TandaTransaction|null
-     * @throws Exception
      */
     public function payout(Request $request): ?TandaTransaction
     {
