@@ -6,6 +6,9 @@ use EdLugz\Tanda\Models\TandaFunding;
 use EdLugz\Tanda\Models\TandaTransaction;
 use Illuminate\Http\Request;
 
+/**
+ *
+ */
 class TandaHelper
 {
     /**
@@ -216,5 +219,21 @@ class TandaHelper
         $transaction->update($data);
 
         return $transaction;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getPaymentBaseUrl(): string
+    {
+        return rtrim(config('tanda.base_url'), '/');
+    }
+
+    /**
+     * @return string
+     */
+    public static function getPaymentResultUrl(): string
+    {
+        return self::getPaymentBaseUrl() . '/' . ltrim(config('tanda.result_url'), '/');
     }
 }
