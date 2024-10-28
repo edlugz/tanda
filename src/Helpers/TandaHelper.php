@@ -4,6 +4,7 @@ namespace EdLugz\Tanda\Helpers;
 
 use EdLugz\Tanda\Models\TandaFunding;
 use EdLugz\Tanda\Models\TandaTransaction;
+use Exception;
 use Illuminate\Http\Request;
 
 /**
@@ -55,13 +56,18 @@ class TandaHelper
      *
      * @param Request $request
      *
-     * @return TandaTransaction
+     * @return TandaTransaction|null
+     * @throws Exception
      */
-    public function payout(Request $request): TandaTransaction
+    public function payout(Request $request): ?TandaTransaction
     {
         $transaction = TandaTransaction::where('transaction_id', $request->input('transactionId'))
                         ->whereNotNull('transaction_id')
                         ->first();
+
+        if (!$transaction) {
+            return null;
+        }
 
         $transaction->update(
             [
@@ -115,9 +121,13 @@ class TandaHelper
      *
      * @return TandaFunding
      */
-    public function c2b(Request $request): TandaFunding
+    public function c2b(Request $request): ?TandaFunding
     {
         $funding = TandaFunding::where('transaction_id', $request->input('transactionId'))->first();
+
+        if (!$funding) {
+            return null;
+        }
 
         $funding->update(
             [
@@ -190,9 +200,13 @@ class TandaHelper
      *
      * @return TandaTransaction
      */
-    public function p2p(Request $request): TandaTransaction
+    public function p2p(Request $request): ?TandaTransaction
     {
         $transaction = TandaTransaction::where('payment_reference', $request->input('reference'))->first();
+
+        if (!$transaction) {
+            return null;
+        }
 
         $transaction->update(
             [
