@@ -118,7 +118,7 @@ class TandaHelper
      *
      * @param Request $request
      *
-     * @return TandaFunding
+     * @return TandaFunding|null
      */
     public function c2b(Request $request): ?TandaFunding
     {
@@ -197,7 +197,7 @@ class TandaHelper
      *
      * @param Request $request
      *
-     * @return TandaTransaction
+     * @return TandaTransaction|null
      */
     public function p2p(Request $request): ?TandaTransaction
     {
