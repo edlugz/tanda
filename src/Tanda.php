@@ -2,6 +2,7 @@
 
 namespace EdLugz\Tanda;
 
+use EdLugz\Tanda\Exceptions\TandaRequestException;
 use EdLugz\Tanda\Helpers\TandaHelper;
 use EdLugz\Tanda\Requests\Airtime;
 use EdLugz\Tanda\Requests\B2B;
@@ -46,7 +47,7 @@ class Tanda
     }
 
     /**
-     * 	C2B functions.
+     *    C2B functions.
      *
      * @return C2B
      */
@@ -56,43 +57,51 @@ class Tanda
     }
 
     /**
-     * 	B2C functions.
+     *    B2C functions.
      *
+     * @param string $resultUrl
      * @return B2C
+     * @throws TandaRequestException
      */
-    public function b2c(): B2C
+    public function b2c(string $resultUrl): B2C
     {
-        return new B2C();
+        return new B2C($resultUrl);
     }
 
     /**
-     * 	B2B functions.
+     *    B2B functions.
      *
+     * @param string $resultURl
      * @return B2B
+     * @throws TandaRequestException
      */
-    public function b2b(): B2B
+    public function b2b(string $resultURl): B2B
     {
-        return new B2B();
+        return new B2B($resultURl);
     }
 
     /**
-     * 	Airtime functions.
+     *    Airtime functions.
      *
+     * @param string $resultUrl
      * @return Airtime
+     * @throws TandaRequestException
      */
-    public function airtime(): Airtime
+    public function airtime(string $resultUrl): Airtime
     {
-        return new Airtime();
+        return new Airtime($resultUrl);
     }
 
     /**
-     * 	Utility functions.
+     *    Utility functions.
      *
+     * @param string $resultUrl
      * @return Utility
+     * @throws TandaRequestException
      */
-    public function utility(): Utility
+    public function utility(string $resultUrl): Utility
     {
-        return new Utility();
+        return new Utility($resultUrl);
     }
 
     /**
