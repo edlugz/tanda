@@ -3,6 +3,7 @@
 namespace EdLugz\Tanda\Requests;
 
 use EdLugz\Tanda\Exceptions\TandaRequestException;
+use EdLugz\Tanda\Helpers\TandaHelper;
 use EdLugz\Tanda\Models\TandaTransaction;
 use EdLugz\Tanda\TandaClient;
 use Illuminate\Support\Str;
@@ -35,7 +36,7 @@ class P2P extends TandaClient
      *
      * @throws TandaRequestException
      */
-    public function __construct()
+    public function __construct(string $resultUrl = null)
     {
         parent::__construct();
 
@@ -43,7 +44,7 @@ class P2P extends TandaClient
 
         $this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
 
-        $this->resultUrl = config('tanda.result_url');
+        $this->resultUrl = $resultURL ?? TandaHelper::getPaymentResultUrl();
     }
 
     /**
@@ -53,7 +54,6 @@ class P2P extends TandaClient
      * @param string $receiverWallet
      * @param string $amount
      * @param array $customFieldsKeyValue
-     * @param string|null $resultUrl
      *
      * @return TandaTransaction
      */
@@ -62,13 +62,8 @@ class P2P extends TandaClient
         string $receiverWallet,
         string $amount,
         array $customFieldsKeyValue = [],
-        string $resultUrl = null
     ): TandaTransaction {
         $reference = (string) Str::ulid();
-
-        if ($resultUrl) {
-            $this->resultUrl = $resultUrl;
-        }
 
         $parameters = [
             'commandId'         => 'MerchantToMerchantPayment',

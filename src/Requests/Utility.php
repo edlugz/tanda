@@ -111,7 +111,7 @@ class Utility extends TandaClient
         $payment->update([]);
 
         try {
-            $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
+            $response = $this->call($this->endPoint, ['json' => $parameters]);
 
             $payment->update(
                 [

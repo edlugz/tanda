@@ -44,7 +44,7 @@ class Airtime extends TandaClient
 
         $this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
 
-        $this->resultUrl = $resultUrl ?? $resultURL ?? TandaHelper::getPaymentResultUrl();
+        $this->resultUrl = $resultUrl ?? TandaHelper::getPaymentResultUrl();
     }
 
     /**
@@ -109,7 +109,7 @@ class Airtime extends TandaClient
         ], $customFieldsKeyValue));
 
         try {
-            $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
+            $response = $this->call($this->endPoint, ['json' => $parameters]);
 
             $payment->update(
                 [

@@ -3,6 +3,7 @@
 namespace EdLugz\Tanda\Requests;
 
 use EdLugz\Tanda\Exceptions\TandaRequestException;
+use EdLugz\Tanda\Helpers\TandaHelper;
 use EdLugz\Tanda\Models\TandaFunding;
 use EdLugz\Tanda\TandaClient;
 use Illuminate\Support\Str;
@@ -35,7 +36,7 @@ class C2B extends TandaClient
      *
      * @throws TandaRequestException
      */
-    public function __construct()
+    public function __construct(string $resultUrl = null)
     {
         parent::__construct();
 
@@ -43,7 +44,7 @@ class C2B extends TandaClient
 
         $this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
 
-        $this->resultUrl = config('tanda.c2b_result_url');
+        $this->resultUrl = $resultUrl ?? TandaHelper::getFundingResultUrl();
     }
 
     /**
@@ -105,7 +106,7 @@ class C2B extends TandaClient
         ];
 
         try {
-            $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
+            $response = $this->call($this->endPoint, ['json' => $parameters]);
 
             $funding->update(
                 [

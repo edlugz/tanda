@@ -115,7 +115,7 @@ class B2B extends TandaClient
         $payment->update(['json_request' => json_encode($parameters)]);
 
         try {
-            $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
+            $response = $this->call($this->endPoint, ['json' => $parameters]);
 
             $payment->update(
                 [
@@ -223,7 +223,7 @@ class B2B extends TandaClient
         ], $customFieldsKeyValue));
 
         try {
-            $response = $this->call($this->endPoint, ['json' => $parameters], 'POST');
+            $response = $this->call($this->endPoint, ['json' => $parameters]);
 
             $payment->update(
                 [
