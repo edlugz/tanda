@@ -59,7 +59,7 @@ return [
     |
     */
 
-    'base_url' => env('TANDA_BASE_URL', ''),
+    'base_url' => env('TANDA_BASE_URL', 'https://api-v2.tanda.africa'),
 
     /*
     |--------------------------------------------------------------------------
