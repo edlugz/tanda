@@ -39,21 +39,25 @@ class Tanda
     /**
      * P2P functions.
      *
+     * @param string $resultUrl
      * @return P2P
+     * @throws TandaRequestException
      */
-    public function p2p(): P2P
+    public function p2p(string $resultUrl): P2P
     {
-        return new P2P();
+        return new P2P($resultUrl);
     }
 
     /**
      *    C2B functions.
      *
+     * @param string $resultUrl
      * @return C2B
+     * @throws TandaRequestException
      */
-    public function c2b(): C2B
+    public function c2b(string $resultUrl): C2B
     {
-        return new C2B();
+        return new C2B($resultUrl);
     }
 
     /**
