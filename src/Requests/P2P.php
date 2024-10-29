@@ -44,7 +44,7 @@ class P2P extends TandaClient
 
         $this->endPoint = 'io/v2/organizations/'.$this->orgId.'/requests';
 
-        $this->resultUrl = $resultURL ?? TandaHelper::getPaymentResultUrl();
+        $this->resultUrl = $resultUrl ?? TandaHelper::getPaymentResultUrl();
     }
 
     /**
