@@ -4,6 +4,7 @@ namespace EdLugz\Tanda;
 
 use EdLugz\Tanda\Exceptions\TandaRequestException;
 use EdLugz\Tanda\Logging\Log;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
@@ -56,7 +57,8 @@ class TandaClient
      * and throw the necessary exception if there are any missing-required
      * configurations.
      *
-     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
+     * @throws TandaRequestException
+     * @throws Exception
      */
     public function __construct()
     {
@@ -82,9 +84,9 @@ class TandaClient
     /**
      * Get access token from Tanda APIs.
      *
-     * @throws \EdLugz\Tanda\Exceptions\TandaRequestException
-     *
      * @return void
+     * @throws TandaRequestException
+     *
      */
     protected function getAccessToken(): void
     {
@@ -104,7 +106,7 @@ class TandaClient
                 ],
             ];
 
-            $accessTokenDetails = $this->call('accounts/v1/oauth/token', $options, 'POST');
+            $accessTokenDetails = $this->call('accounts/v1/oauth/token', $options);
 
             //add to Cache
             Cache::add('tanda_token', $accessTokenDetails->access_token, now()->addMinutes(58));
