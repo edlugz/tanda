@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'payment_base_url' => env('TANDA_PAYMENT_BASE_URL', ''),
+    'tanda_base_result_url' => env('TANDA_BASE_RESULT_URL', ''),
 
     /*
     |--------------------------------------------------------------------------
