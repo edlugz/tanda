@@ -65,7 +65,7 @@ class TandaClient
 
         $this->base_url = [
             'uat'  => 'https://tandaio-api-uats.tanda.co.ke',
-            'live' => config('tanda.base_uri'),
+            'live' => config('tanda.base_url'),
         ];
 
         $options = [
