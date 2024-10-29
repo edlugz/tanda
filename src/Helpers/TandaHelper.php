@@ -238,9 +238,9 @@ class TandaHelper
     /**
      * @return string
      */
-    public static function getPaymentBaseUrl(): string
+    public static function getBaseResultUrl(): string
     {
-        return rtrim(config('tanda.payment_base_url'), '/');
+        return rtrim(config('tanda.tanda_base_result_url'), '/');
     }
 
     /**
@@ -248,7 +248,7 @@ class TandaHelper
      */
     public static function getPaymentResultUrl(): string
     {
-        return self::getPaymentBaseUrl() . '/' . ltrim(config('tanda.result_url'), '/');
+        return self::getBaseResultUrl() . '/' . ltrim(config('tanda.result_url'), '/');
     }
 
     /**
@@ -256,6 +256,6 @@ class TandaHelper
      */
     public static function getFundingResultUrl(): string
     {
-        return self::getPaymentBaseUrl() . '/' . ltrim(config('tanda.c2b_result_url'), '/');
+        return self::getBaseResultUrl() . '/' . ltrim(config('tanda.c2b_result_url'), '/');
     }
 }
