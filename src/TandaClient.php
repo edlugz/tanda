@@ -47,10 +47,7 @@ class TandaClient
      *
      * @var array
      */
-    protected array $base_url = [
-        'uat'  => 'https://tandaio-api-uats.tanda.co.ke',
-        'live' => 'https://api-v2.tanda.africa',
-    ];
+    protected array $base_url;
 
     /**
      * Make the initializations required to make calls to the Tanda APIs
@@ -65,6 +62,11 @@ class TandaClient
         $this->validateConfigurations();
 
         $mode = config('tanda.mode');
+
+        $this->base_url = [
+            'uat'  => 'https://tandaio-api-uats.tanda.co.ke',
+            'live' => config('tanda.base_uri'),
+        ];
 
         $options = [
             'base_uri' => $this->base_url[$mode],
