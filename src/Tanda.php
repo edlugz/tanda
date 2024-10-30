@@ -75,7 +75,7 @@ class Tanda
     /**
      *    B2B functions.
      *
-     * @param string $resultURl
+     * @param string $resultUrl
      * @return B2B
      * @throws TandaRequestException
      */
